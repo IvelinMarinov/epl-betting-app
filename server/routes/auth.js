@@ -9,6 +9,8 @@ function validateSignupForm (payload) {
   let isFormValid = true
   let message = ''
 
+  console.log(payload.dateOfBirth);
+
   if (!payload || typeof payload.username !== 'string' || payload.username.trim().length < 3) {
     isFormValid = false
     errors.username = 'Username must be at least 3 characters long'
@@ -22,6 +24,11 @@ function validateSignupForm (payload) {
   if (!payload || typeof payload.password !== 'string' || payload.password.trim().length < 3) {
     isFormValid = false
     errors.password = 'Password must be at least 3 characters long'
+  }
+
+  if(!payload || calculateAge(payload.dateOfBirth) < 18) {
+    isFormValid = false
+    errors.dateOfBirth = 'You must be at least 18 years old to register'
   }
 
   if (!isFormValid) {
@@ -59,6 +66,13 @@ function validateLoginForm (payload) {
     message,
     errors
   }
+}
+
+function calculateAge(dateOfBirthAsStr) {
+  let dateOfBirth = new Date(dateOfBirthAsStr);
+  let ageDiffMs = Date.now() - dateOfBirth.getTime();
+  let ageDate = new Date(ageDiffMs);
+  return Math.abs(ageDate.getUTCFullYear() - 1970);
 }
 
 router.post('/signup', (req, res, next) => {

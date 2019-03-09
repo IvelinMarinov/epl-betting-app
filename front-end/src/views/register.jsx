@@ -14,6 +14,7 @@ class Register extends Component {
             email: '',
             password: '',
             error: '',
+            dateOfBirth: '',
             hasRegisterred: false
         }
     }
@@ -27,10 +28,11 @@ class Register extends Component {
     handleSubmit = async (event) => {
 
         event.preventDefault();
-        const { username, email, password } = this.state;
+        const { username, email, password, dateOfBirth } = this.state;
+        const body = {username, email, password, dateOfBirth}
 
         try {
-            let response = await Register.authService.register({username, email, password});
+            let response = await Register.authService.register(body);
             if (!response.success) {
                 //const errors = Object.values(result.errors).join(' ')
                 throw new Error(response.message);
@@ -46,7 +48,7 @@ class Register extends Component {
     }
 
     render() {
-        const { username, email, password, hasRegisterred } = this.state;
+        const { username, email, password, hasRegisterred, dateOfBirth } = this.state;
         const { isLoggedIn } = this.props;
 
         if (isLoggedIn) {
@@ -95,6 +97,17 @@ class Register extends Component {
                             className="form-control"
                             placeholder="Choose your password"
                             value={password}
+                            onChange={this.handleChange}
+                        />
+                        <br/>
+
+                        <label htmlFor="dateOfBirth">Date of birth</label>
+                        <input
+                            type="date"
+                            name="dateOfBirth"
+                            className="form-control"
+                            placeholder="Enter your date of birth"
+                            value={dateOfBirth}
                             onChange={this.handleChange}
                         />
                         <br/>
