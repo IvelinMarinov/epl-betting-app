@@ -9,9 +9,9 @@ function validateSignupForm (payload) {
   let isFormValid = true
   let message = ''
 
-  if (!payload || typeof payload.username !== 'string' || payload.username.trim().length < 4) {
+  if (!payload || typeof payload.username !== 'string' || payload.username.trim().length < 3) {
     isFormValid = false
-    errors.username = 'Username must be at least 4 characters long'
+    errors.username = 'Username must be at least 3 characters long'
   }
 
   if (!payload || typeof payload.email !== 'string' || !validator.isEmail(payload.email)) {
@@ -19,9 +19,9 @@ function validateSignupForm (payload) {
     errors.email = 'Please provide a correct email address'
   }
 
-  if (!payload || typeof payload.password !== 'string' || payload.password.trim().length < 8) {
+  if (!payload || typeof payload.password !== 'string' || payload.password.trim().length < 3) {
     isFormValid = false
-    errors.password = 'Password must be at least 8 characters long'
+    errors.password = 'Password must be at least 3 characters long'
   }
 
   if (!isFormValid) {
