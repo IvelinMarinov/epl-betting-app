@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const User = require('../models/User')
+const Team = require('../models/Team')
 
 mongoose.Promise = global.Promise
 
@@ -13,6 +14,7 @@ module.exports = (settings) => {
     }
     console.log('MongoDB ready!')
     User.seedAdminUser()
+    Team.seedTeams()
   })
   db.on('error', err => console.log(`Database error: ${err}`))
 }
