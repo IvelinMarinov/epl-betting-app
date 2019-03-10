@@ -9,3 +9,18 @@ let fixtureSchema = new mongoose.Schema({
   let Fixture = mongoose.model('Fixture', fixtureSchema)
   
   module.exports = Fixture
+  module.exports.seedEmptyFixtures = async () => {
+    let fixturesDb = await Fixture.find({});
+
+      if (fixturesDb.length > 0) {
+            return;
+      }
+
+    for(let i = 1; i <= 38; i++) {
+      await Fixture.create({
+        round: i,
+        isCompleted: false,
+        gameStats: []
+      });
+    }
+  }

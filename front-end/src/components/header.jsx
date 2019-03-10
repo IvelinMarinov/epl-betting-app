@@ -17,6 +17,7 @@ class Header extends Component {
                     <NavLink to="/" activeClassName="active">NavLink 3</NavLink>
                     <NavLink to="/standings/premier-league" activeClassName="active">EPL Standings</NavLink>
                     <NavLink to="/standings/betting" activeClassName="active">Bet Standings</NavLink>
+                    <NavLink to="/admin/setup-round" activeClassName="active">Setup Round</NavLink>
                     {
                         isLoggedIn
                             ? (

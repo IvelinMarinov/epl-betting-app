@@ -79,7 +79,7 @@ class BetStandings extends Component {
                                 <td>{user.username}</td>
                                 <td>{user.guessedScores}</td>
                                 <td>{user.guessedSigns}</td>
-                                <td>{user.points}</td>
+                                <td>{user.points }</td>
                             </tr>
                         ))}
                     </tbody>
