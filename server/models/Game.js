@@ -10,4 +10,4 @@ let gameSchema = new mongoose.Schema({
   
   let Game = mongoose.model('Game', gameSchema)
   
-  module.exports = Game
+  module.exports = Game; 

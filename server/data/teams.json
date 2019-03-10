@@ -1,7 +1,7 @@
 [
   {
     "name": "Arsenal",
-    "short_name": "Arsenal",
+    "short_name": "arsenal",
     "club_code": "ARS"
   },
   {
@@ -15,8 +15,8 @@
     "club_code": "BHA"
   },
   {
-    "name": "burnley",
-    "short_name": "Burnley",
+    "name": "Burnley",
+    "short_name": "burnley",
     "club_code": "BUR"
   },
   {

@@ -10,20 +10,19 @@ let teamSchema = new mongoose.Schema({
 let Team = mongoose.model('Team', teamSchema)
 
 module.exports = Team
-module.exports.seedTeams = () => {
-      Team.find({}).then(t => {
-            if (t.length > 0) {
-                  return
-            }
+module.exports.seedTeams = async () => {
+      let teamsDb = await Team.find({});
 
-            let teams = require('../data/teams.json');
-            for (let team of teams) {
-                  console.log(team)
-                  Team.create({ 
-                        name: team.name,
-                        shortName: team.short_name,
-                        code: team.club_code
-                   })
-            }
-      })
+      if (teamsDb.length > 0) {
+            return;
+      }
+
+      let teams = require('../data/teams.json');
+      for (let team of teams) {
+            Team.create({
+                  name: team.name,
+                  shortName: team.short_name,
+                  code: team.club_code
+            })
+      }
 }

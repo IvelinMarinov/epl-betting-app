@@ -10,6 +10,8 @@ import Register from './views/register'
 import Logout from './views/logout';
 import { UserProvider, defaultUserState } from './components/contexts/user-context';
 import { AuthorizedRouteWithContext } from './components/authorized-route.jsx';
+import ClubStandings from './views/club-standings';
+import BetStandings from './views/bet-standings';
 
 class App extends Component {
   constructor(props) {
@@ -47,6 +49,8 @@ class App extends Component {
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/logout" component={Logout} />
+                <Route exact path="/standings/premier-league" component={ClubStandings} />
+                <Route exact path="/standings/betting" component={BetStandings} />
                 <Route component={NotFound} />
               </Switch>
               <Footer />

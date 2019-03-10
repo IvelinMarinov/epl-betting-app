@@ -7,6 +7,8 @@ let userSchema = new mongoose.Schema({
   email: {type: String, required: REQUIRED_VALIDATION_MESSAGE, unique: true},
   username: {type: String, required: REQUIRED_VALIDATION_MESSAGE},
   dateOfBirth: {type: mongoose.SchemaTypes.Date, required: REQUIRED_VALIDATION_MESSAGE},
+  guessedSigns: {type: mongoose.SchemaTypes.Number, default: 0},
+  guessedScores: {type: mongoose.SchemaTypes.Number, default: 0},
   points: {type: mongoose.SchemaTypes.Number, default: 0},
   salt: String,
   password: String,
@@ -32,6 +34,7 @@ module.exports.seedAdminUser = () => {
     User.create({
       email: 'admin@admin.com',
       username: 'Admin',
+      dateOfBirth: '07-25-1986',
       salt: salt,
       password: password,
       roles: ['Admin']

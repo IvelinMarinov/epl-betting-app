@@ -15,7 +15,8 @@ class Header extends Component {
                 <nav className="navbar navbar-light bg-faded">
                     <NavLink to="/das" activeClassName="active">NavLink 2</NavLink>
                     <NavLink to="/" activeClassName="active">NavLink 3</NavLink>
-                    <NavLink to="/" activeClassName="active">NavLink 4</NavLink>
+                    <NavLink to="/standings/premier-league" activeClassName="active">EPL Standings</NavLink>
+                    <NavLink to="/standings/betting" activeClassName="active">Bet Standings</NavLink>
                     {
                         isLoggedIn
                             ? (
