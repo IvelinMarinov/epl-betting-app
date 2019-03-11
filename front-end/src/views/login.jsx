@@ -35,7 +35,6 @@ class Login extends Component {
             try {
                 const result = await Login.authService.login({ email, password });
                 if (!result.success) {
-                    //const errors = Object.values(result.errors).join(' ')
                     throw new Error(result.message);
                 }
 
@@ -45,8 +44,11 @@ class Login extends Component {
                     isLoggedIn: true
                 }))
 
+                let isAdmin = result.user.roles.includes('Admin');
+
                 updateUser({
                     isLoggedIn: true,
+                    isAdmin: isAdmin,
                     updateUser,
                     ...result.user
                 });

@@ -9,8 +9,6 @@ function validateSignupForm (payload) {
   let isFormValid = true
   let message = ''
 
-  console.log(payload.dateOfBirth);
-
   if (!payload || typeof payload.username !== 'string' || payload.username.trim().length < 3) {
     isFormValid = false
     errors.username = 'Username must be at least 3 characters long'

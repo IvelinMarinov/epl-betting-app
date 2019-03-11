@@ -8,7 +8,31 @@ class Header extends Component {
     }
 
     render() {
-        const { username, isLoggedIn } = this.props;
+        const { username, isLoggedIn, isAdmin } = this.props;
+
+        let adminLinks, authLinks
+
+        if (isAdmin) {
+            adminLinks =
+                <Fragment>
+                    <NavLink to="/admin/setup-round" activeClassName="active">Setup Round</NavLink>
+                    <NavLink to="/admin/setup-round" activeClassName="active">Complete Round</NavLink>
+                </Fragment>
+        }
+
+        if (isLoggedIn) {
+            authLinks =
+                <Fragment>
+                    <NavLink to="/logout" activeClassName="active">Logout</NavLink>
+                    <span>Hello, {username}!</span>
+                </Fragment>
+        } else {
+            authLinks =
+                <Fragment>
+                    <NavLink to="/login" activeClassName="active">Login</NavLink>
+                    <NavLink to="/register" activeClassName="active">Register</NavLink>
+                </Fragment>
+        }
 
         return (
             <header>
@@ -17,22 +41,8 @@ class Header extends Component {
                     <NavLink to="/" activeClassName="active">NavLink 3</NavLink>
                     <NavLink to="/standings/premier-league" activeClassName="active">EPL Standings</NavLink>
                     <NavLink to="/standings/betting" activeClassName="active">Bet Standings</NavLink>
-                    <NavLink to="/admin/setup-round" activeClassName="active">Setup Round</NavLink>
-                    {
-                        isLoggedIn
-                            ? (
-                                <Fragment>
-                                    <NavLink to="/logout" activeClassName="active">Logout</NavLink>
-                                    <span>Hello, {username}!</span>
-                                </Fragment>
-                            )
-                            : (
-                                <Fragment>
-                                    <NavLink to="/login" activeClassName="active">Login</NavLink>
-                                    <NavLink to="/register" activeClassName="active">Register</NavLink>
-                                </Fragment>
-                            )
-                    }
+                    {adminLinks}
+                    {authLinks}
                 </nav>
             </header>
         );
@@ -48,6 +58,7 @@ const HeaderWithContext = (props) => {
                         {...props}
                         username={user.username}
                         isLoggedIn={user.isLoggedIn}
+                        isAdmin={user.isAdmin}
                     />
                 )
             }

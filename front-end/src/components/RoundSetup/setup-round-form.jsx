@@ -1,7 +1,10 @@
 import React, { Component, Fragment } from 'react';
+import GameService from '../../services/admin-service';
 import TeamsDropDown from './teams-dropdown';
 
 class SetupRoundForm extends Component {
+    static GameService = new GameService();
+
     constructor(props) {
         super(props);
 
@@ -27,7 +30,7 @@ class SetupRoundForm extends Component {
         console.log(this.state)
     }
 
-    handleSubmit = (event) => {
+    handleSubmit = async (event) => {
         event.preventDefault();
 
         // const values = Object.values(this.state);
@@ -48,7 +51,10 @@ class SetupRoundForm extends Component {
 
             let gameNumAdded = Object.keys(reqBody).filter(k => k === gameNum);
             if(gameNumAdded.length === 0) {
-                reqBody[gameNum] = {}
+                reqBody[gameNum] = {
+                    home_team_id: 'X',
+                    away_team_id: 'X'
+                }
             }
 
             if(homeOrAway.trim() === 'home') {
@@ -56,6 +62,25 @@ class SetupRoundForm extends Component {
             } else {
                 reqBody[gameNum].away_team_id = value
             }
+        }
+
+        reqBody = {
+            round: this.props.selectedRound,
+            games: reqBody
+        }
+
+        try {
+            let response = await SetupRoundForm.GameService.saveRoundData(reqBody);
+            
+            if (!response.success) {
+                throw new Error(response.message);
+            }
+            
+            //TODO
+            //Show success message
+
+        } catch(err) {
+            console.log(err)
         }
     }
 

@@ -1,12 +1,11 @@
 import React, { Component, Fragment } from 'react';
-import TeamService from '../services/team-service';
-import TeamsDropDown from '../components/RoundSetup/teams-dropdown';
+import GameService from '../services/admin-service';
 import SetupRoundForm from '../components/RoundSetup/setup-round-form';
 
 const ClubLogos = require.context('../static/images', true);
 
 class RoundSetup extends Component {
-    static TeamService = new TeamService();
+    static GameService = new GameService();
 
     constructor(props) {
         super(props);
@@ -32,7 +31,7 @@ class RoundSetup extends Component {
 
     async componentWillMount() {
         try {
-            let response = await RoundSetup.TeamService.getAllTeams();
+            let response = await RoundSetup.GameService.getAllTeams();
             if (!response.success) {
                 throw new Error(response.message);
             }

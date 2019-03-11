@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 
 let fixtureSchema = new mongoose.Schema({
     round: {type: mongoose.SchemaTypes.Number, required: true},
+    isActive: {type: mongoose.SchemaTypes.Boolean, default: false},
     isCompleted: {type: mongoose.SchemaTypes.Boolean, default: false},
     gameStats: [{type: mongoose.SchemaTypes.ObjectId, ref: 'Game'}]
   });
@@ -19,7 +20,6 @@ let fixtureSchema = new mongoose.Schema({
     for(let i = 1; i <= 38; i++) {
       await Fixture.create({
         round: i,
-        isCompleted: false,
         gameStats: []
       });
     }
