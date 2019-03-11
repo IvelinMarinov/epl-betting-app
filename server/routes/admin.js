@@ -47,7 +47,7 @@ router.post('/save-round', async (req, res) => {
   let { round, games } = req.body;
 
   try {
-    let fixture = await Fixture.find({ round: round });
+    let fixture = await Fixture.findOne({ round: round });
     if (fixture.isCompleted) {
       return res.status(200).json({
         success: false,
@@ -69,7 +69,7 @@ router.post('/save-round', async (req, res) => {
     }
 
     await Fixture
-      .findByIdAndUpdate(fixture[0]._id, {
+      .findByIdAndUpdate(fixture._id, {
         $set: {
           gameStats: gameIds,
           isActive: true
@@ -90,6 +90,41 @@ router.post('/save-round', async (req, res) => {
       data: {}
     })
   }
+});
+
+router.get('/get-active-round', async (req, res) => {
+  if (!req.user.roles.includes('Admin')) {
+    return res.status(200).json({
+      success: false,
+      message: 'Only admins can setup rounds!',
+      data: {}
+    });
+  }
+
+  let activeFixtures = await Fixture
+    .find({ 'isActive': true })
+    .populate({
+      path: 'gameStats',
+      model: 'Game',
+      populate: {
+        path: 'homeTeamId awayTeamId',
+        model: 'Team'
+      }
+    });
+
+  if (activeFixtures.length > 1) {
+    return res.status(200).json({
+      success: false,
+      message: 'More than one active round, please contact your db admin!',
+      data: {}
+    });
+  }
+
+  return res.status(200).json({
+    success: true,
+    message: ``,
+    data: activeFixtures[0]
+  });
 });
 
 module.exports = router 

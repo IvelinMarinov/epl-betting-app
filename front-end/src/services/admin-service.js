@@ -5,6 +5,7 @@ class StandingsService {
         this.baseUrl = 'http://localhost:5000/admin';
         this.allTeamsUrl = `${this.baseUrl}/all-teams`;
         this.saveRoundUrl = `${this.baseUrl}/save-round`;
+        this.getActiveRoundUrl = `${this.baseUrl}/get-active-round`;
     }
 
     getAllTeams() {
@@ -13,6 +14,10 @@ class StandingsService {
 
     saveRoundData(body) {
         return post(this.saveRoundUrl, body)
+    }
+
+    getActiveRound() {
+        return get(this.getActiveRoundUrl, {}, {})
     }
 }
 

@@ -16,12 +16,12 @@ class Header extends Component {
             adminLinks =
                 <Fragment>
                     <NavLink to="/admin/setup-round" activeClassName="active">Setup Round</NavLink>
-                    <NavLink to="/admin/setup-round" activeClassName="active">Complete Round</NavLink>
+                    <NavLink to="/admin/complete-round" activeClassName="active">Complete Round</NavLink>
                 </Fragment>
         }
 
         if (isLoggedIn) {
-            authLinks =
+            authLinks =  
                 <Fragment>
                     <NavLink to="/logout" activeClassName="active">Logout</NavLink>
                     <span>Hello, {username}!</span>

@@ -12,7 +12,8 @@ import { UserProvider, defaultUserState } from './components/contexts/user-conte
 import { AuthorizedRouteWithContext } from './components/authorized-route.jsx';
 import ClubStandings from './views/club-standings';
 import BetStandings from './views/bet-standings';
-import RoundSetup from './views/round-setup';
+import RoundSetup from './views/setup-round';
+import CompleteRound from './views/complete-round';
 
 class App extends Component {
   constructor(props) {
@@ -53,6 +54,7 @@ class App extends Component {
                 <Route exact path="/standings/premier-league" component={ClubStandings} />
                 <Route exact path="/standings/betting" component={BetStandings} />
                 <Route exact path="/admin/setup-round" component={RoundSetup} />
+                <Route exact path="/admin/complete-round" component={CompleteRound} />
                 <Route component={NotFound} />
               </Switch>
               <Footer />
