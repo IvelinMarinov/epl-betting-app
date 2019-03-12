@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react';
-import GameService from '../../services/admin-service';
+import AdminService from '../../services/admin-service';
 import TeamsDropDown from './teams-dropdown';
 
 class SetupRoundForm extends Component {
-    static GameService = new GameService();
+    static AdminService = new AdminService();
 
     constructor(props) {
         super(props);
@@ -70,7 +70,7 @@ class SetupRoundForm extends Component {
         }
 
         try {
-            let response = await SetupRoundForm.GameService.saveRoundData(reqBody);
+            let response = await SetupRoundForm.AdminService.saveRoundData(reqBody);
             
             if (!response.success) {
                 throw new Error(response.message);

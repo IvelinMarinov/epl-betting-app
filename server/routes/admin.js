@@ -135,4 +135,52 @@ router.get('/get-active-round', async (req, res) => {
   });
 });
 
+router.post('/complete-round', async (req, res) => {
+  if (!req.user.roles.includes('Admin')) {
+    return res.status(200).json({
+      success: false,
+      message: 'Only admins can setup rounds!',
+      data: {}
+    });
+  }
+
+  const { fixtureId, games } = req.body;
+
+  let fixture = await Fixture.findById(fixtureId);
+  if(!fixture) {
+    return res.status(200).json({
+      success: false,
+      message: 'No such fixture found',
+      data: {}
+    });
+  }
+
+  for(let game of Object.values(games)) {
+    console.log(game)
+
+    await Game.findByIdAndUpdate(game.game_id, {
+      $set: {
+        homeTeamGoals: game.home_team_score,
+        awayTeamGoals: game.away_team_score
+      }
+    })
+  }
+
+  await Fixture.findByIdAndUpdate(fixtureId, {
+    $set: {
+      isActive: false,
+      isCompleted: true
+    }
+  })
+
+  //TODO
+  //Loop through user bets and calculate points
+
+  return res.status(200).json({
+    success: true,
+    message: `Success`,
+    data: {}
+  });
+})
+
 module.exports = router 

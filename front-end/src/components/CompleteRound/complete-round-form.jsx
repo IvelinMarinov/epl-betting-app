@@ -1,25 +1,14 @@
 import React, { Component } from 'react';
 import GamePair from '../CompleteRound/game-pair';
+import AdminService from '../../services/admin-service';
 
 class CompleteRoundForm extends Component {
+    static AdminService = new AdminService();
+
     constructor(props) {
         super(props)
 
         this.state = {
-            // fixtureId: '',
-            // gameScores: {
-            //     test: {},
-            //     1: {homeScore: 0, awayScore: 0, sign: '', gameId: ''},
-            //     2: {homeScore: 0, awayScore: 0, sign: '', gameId: ''},
-            //     3: {homeScore: 0, awayScore: 0, sign: '', gameId: ''},
-            //     4: {homeScore: 0, awayScore: 0, sign: '', gameId: ''},
-            //     5: {homeScore: 0, awayScore: 0, sign: '', gameId: ''},
-            //     6: {homeScore: 0, awayScore: 0, sign: '', gameId: ''},
-            //     7: {homeScore: 0, awayScore: 0, sign: '', gameId: ''},
-            //     8: {homeScore: 0, awayScore: 0, sign: '', gameId: ''},
-            //     9: {homeScore: 0, awayScore: 0, sign: '', gameId: ''},
-            //     10: {homeScore: 0, awayScore: 0, sign: '' ,gameId: ''}
-            // }
             home_1: '', away_1: '', id_1: '',
             home_2: '', away_2: '', id_2: '',
             home_3: '', away_3: '', id_3: '',
@@ -97,6 +86,16 @@ class CompleteRoundForm extends Component {
         }
 
         console.log(reqBody)
+
+        try {
+            var response = await CompleteRoundForm.AdminService.completeRound(reqBody);
+
+            if (!response.success) {
+                throw new Error(response.message);
+            }
+        } catch(err) {
+            console.log(err);
+        }
     }
 
     render() {
