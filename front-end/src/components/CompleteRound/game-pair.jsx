@@ -30,9 +30,6 @@ class GamePair extends Component {
         const homeTeam = game.homeTeamId;
         const awayTeam = game.awayTeamId;
 
-        //console.log(game)
-        console.log(gameNum)
-
         if (game) {
             return (
                 <Fragment>
@@ -43,7 +40,7 @@ class GamePair extends Component {
                                 <span>{homeTeam.name}</span>
                                 &nbsp;
                                 <input
-                                    onChange={handleChange}
+                                    onChange={(e) => handleChange(e, game._id)}
                                     id ={`home_${gameNum}`}
                                     type="number"
                                     min="0"
@@ -59,7 +56,7 @@ class GamePair extends Component {
                         <div className="row col-sm-4">
                             <div>
                                 <input
-                                    onChange={handleChange}
+                                    onChange={(e) => handleChange(e, game._id)}
                                     id ={`away_${gameNum}`}
                                     type="number"
                                     min="0"

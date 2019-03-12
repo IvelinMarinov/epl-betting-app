@@ -34,7 +34,7 @@ class SetupRoundForm extends Component {
         event.preventDefault();
 
         // const values = Object.values(this.state);
-        // if(values.filter(v => v === '')) {
+        // if(values.filter(v => v === '').length) {
         //     console.log('All fields are required');
         //     return;
         // }

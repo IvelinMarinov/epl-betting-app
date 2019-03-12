@@ -23,6 +23,8 @@ class CompleteRound extends Component {
                 throw new Error(response.message);
             }
 
+            console.log(response.data)
+
             this.setState({
                 fixture: response.data,
                 isDataFetched: true
