@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import AdminService from '../services/admin-service';
+import CompleteRoundForm from '../components/CompleteRound/complete-round-form';
 
 
 class CompleteRound extends Component {
@@ -9,7 +10,7 @@ class CompleteRound extends Component {
         super(props)
 
         this.state = {
-            fixtureData: null,
+            fixture: null,
             isDataFetched: false,
             error: ''
         }
@@ -23,12 +24,9 @@ class CompleteRound extends Component {
             }
 
             this.setState({
-                fixtureData: response.data,
+                fixture: response.data,
                 isDataFetched: true
             })
-
-            console.log(this.state)
-
         } catch (err) {
             console.log(err)
             this.setState({
@@ -38,7 +36,7 @@ class CompleteRound extends Component {
     }
 
     render() {
-        const { isDataFetched } = this.state
+        const { isDataFetched, fixture } = this.state
 
         if(!isDataFetched) {
             return (
@@ -47,7 +45,9 @@ class CompleteRound extends Component {
         }
 
         return (
-            <h1>Round complete page</h1>
+                <CompleteRoundForm
+                    fixture={fixture}
+                />
         )
     }
 }

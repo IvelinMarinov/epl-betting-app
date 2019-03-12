@@ -112,6 +112,14 @@ router.get('/get-active-round', async (req, res) => {
       }
     });
 
+  if (activeFixtures.length === 0) {
+    return res.status(200).json({
+      success: false,
+      message: 'There are no active rounds, please contact your db admin!',
+      data: {}
+    });
+  }
+
   if (activeFixtures.length > 1) {
     return res.status(200).json({
       success: false,

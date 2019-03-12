@@ -91,7 +91,7 @@ class SetupRoundForm extends Component {
             <Fragment>
                 <form onSubmit={this.handleSubmit}>
                     <div className="container col-sm-offset-2 col-sm-6">
-                        <h3>Setup games for Round {selectedRound}</h3>
+                        <h3 className="text-center">Setup games for Round {selectedRound}</h3>
                         <hr />
 
                         <div className="row">
