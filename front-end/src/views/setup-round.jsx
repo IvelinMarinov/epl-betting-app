@@ -44,8 +44,6 @@ class RoundSetup extends Component {
                 }
             });
 
-            console.log(teamsData);
-
             this.setState({
                 teamsDropDownData: teamsData
             })
@@ -62,7 +60,7 @@ class RoundSetup extends Component {
             selectedRound: event.target.value,
             isRoundSelected: true
         })
-        }
+    }
 
 
     render() {
@@ -84,9 +82,9 @@ class RoundSetup extends Component {
         }
 
         return (
-           <SetupRoundForm 
-                selectedRound={selectedRound} 
-                teamsDropDownData={teamsDropDownData} 
+            <SetupRoundForm
+                selectedRound={selectedRound}
+                teamsDropDownData={teamsDropDownData}
             />
         );
     }

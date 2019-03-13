@@ -94,7 +94,7 @@ router.post('/save-round', async (req, res) => {
 
 router.get('/get-active-round', async (req, res) => {
   if (!req.user.roles.includes('Admin')) {
-    return res.status(200).json({
+    return res.status(401).json({
       success: false,
       message: 'Only admins can setup rounds!',
       data: {}
@@ -115,7 +115,7 @@ router.get('/get-active-round', async (req, res) => {
   if (activeFixtures.length === 0) {
     return res.status(200).json({
       success: false,
-      message: 'There are no active rounds, please contact your db admin!',
+      message: 'There are no active rounds, please set up a new round!',
       data: {}
     });
   }

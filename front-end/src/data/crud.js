@@ -23,7 +23,7 @@ function request(method) {
             ...options
         });
 
-        return response.json();
+        return response.json()
     }
 };
 

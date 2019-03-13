@@ -69,8 +69,11 @@ class SetupRoundForm extends Component {
             games: reqBody
         }
 
+        console.log(reqBody)
+
         try {
             let response = await SetupRoundForm.AdminService.saveRoundData(reqBody);
+            console.log(response)
             
             if (!response.success) {
                 throw new Error(response.message);

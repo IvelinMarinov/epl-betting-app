@@ -2,6 +2,10 @@ import React, { Component, Fragment } from 'react';
 import AdminService from '../services/admin-service';
 import CompleteRoundForm from '../components/CompleteRound/complete-round-form';
 
+const ErrorMessagesToRender = [
+    'There are no active rounds, please set up a new round!',
+    'More than one active round, please contact your db admin!'
+]
 
 class CompleteRound extends Component {
     static AdminService = new AdminService();
@@ -12,6 +16,7 @@ class CompleteRound extends Component {
         this.state = {
             fixture: null,
             isDataFetched: false,
+            hasError: false,
             error: ''
         }
     }
@@ -19,6 +24,15 @@ class CompleteRound extends Component {
     async componentWillMount() {
         try {
             let response = await CompleteRound.AdminService.getActiveRound();
+
+            if(ErrorMessagesToRender.includes(response.message)) {
+                this.setState({
+                    hasError: true,
+                    error: response.message,
+                    isDataFetched: true
+                })
+            }
+
             if (!response.success) {
                 throw new Error(response.message);
             }
@@ -38,11 +52,18 @@ class CompleteRound extends Component {
     }
 
     render() {
-        const { isDataFetched, fixture } = this.state
+        const { isDataFetched, fixture, hasError, error } = this.state
+        console.log(hasError, error)
 
         if(!isDataFetched) {
             return (
                 <span>Loading...</span>
+            );
+        }
+
+        if(hasError) {
+            return (
+                <h3>{error}</h3>
             );
         }
 
