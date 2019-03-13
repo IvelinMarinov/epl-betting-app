@@ -21,3 +21,7 @@ footer {
 img {
   height: 50px;
 }
+
+.active {
+  background-color: red;
+}

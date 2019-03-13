@@ -1,6 +1,5 @@
 const express = require('express');
 const ObjectId = require('mongoose').Types.ObjectId;
-const AuthCheck = require('../config/auth-check');
 const Team = require('../models/Team');
 const Fixture = require('../models/Fixture');
 const Game = require('../models/Game');

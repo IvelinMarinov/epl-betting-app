@@ -14,6 +14,7 @@ import ClubStandings from './views/club-standings';
 import BetStandings from './views/bet-standings';
 import RoundSetup from './views/setup-round';
 import CompleteRound from './views/complete-round';
+import PlaceBetsView from './views/place-bets';
 
 class App extends Component {
   constructor(props) {
@@ -53,6 +54,7 @@ class App extends Component {
                 <Route exact path="/logout" component={Logout} />
                 <Route exact path="/standings/premier-league" component={ClubStandings} />
                 <Route exact path="/standings/betting" component={BetStandings} />
+                <Route exact path="/bet" component={PlaceBetsView} />
                 <Route exact path="/admin/setup-round" component={RoundSetup} />
                 <Route exact path="/admin/complete-round" component={CompleteRound} />
                 <Route component={NotFound} />

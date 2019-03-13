@@ -23,6 +23,7 @@ class Header extends Component {
         if (isLoggedIn) {
             authLinks =  
                 <Fragment>
+                    <NavLink to="/bet" activeClassName="active">Place Bets</NavLink>
                     <NavLink to="/logout" activeClassName="active">Logout</NavLink>
                     <span>Hello, {username}!</span>
                 </Fragment>
@@ -37,8 +38,6 @@ class Header extends Component {
         return (
             <header>
                 <nav className="navbar navbar-light bg-faded">
-                    <NavLink to="/das" activeClassName="active">NavLink 2</NavLink>
-                    <NavLink to="/" activeClassName="active">NavLink 3</NavLink>
                     <NavLink to="/standings/premier-league" activeClassName="active">EPL Standings</NavLink>
                     <NavLink to="/standings/betting" activeClassName="active">Bet Standings</NavLink>
                     {adminLinks}

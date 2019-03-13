@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import GamePair from '../common/game-pair';
-import AdminService from '../../services/admin-service';
 
-class CompleteRoundForm extends Component {
-    static AdminService = new AdminService();
-
+class PlaceBetsForm extends Component {
     constructor(props) {
         super(props)
 
@@ -22,7 +19,7 @@ class CompleteRoundForm extends Component {
         }
     }
 
-    handleChange = (event, gameId)  => {
+    handleChange = (event, gameId) => {
         const [homeOrAway, gameNum] = event.target.id.split('_');
 
         this.setState({
@@ -31,9 +28,9 @@ class CompleteRoundForm extends Component {
         });
     }
 
-    handleSubmit = async (event) => {
+    handleSubmit = (event) => {
         event.preventDefault();
-
+        
         const { fixture } = this.props
 
         const values = Object.values(this.state);
@@ -84,16 +81,6 @@ class CompleteRoundForm extends Component {
         }
 
         console.log(reqBody)
-
-        try {
-            var response = await CompleteRoundForm.AdminService.completeRound(reqBody);
-
-            if (!response.success) {
-                throw new Error(response.message);
-            }
-        } catch(err) {
-            console.log(err);
-        }
     }
 
     render() {
@@ -102,21 +89,21 @@ class CompleteRoundForm extends Component {
         return (
             <form onSubmit={this.handleSubmit}>
                 <div className="container col-sm-offset-1 col-sm-10">
-                    <h3 className="text-center">Complete round {fixture.round}</h3>
+                    <h3 className="text-center">Your bets for round {fixture.round}</h3>
                     <hr />
                     {
                         fixture.gameStats.map((g, i) => (<GamePair
                             key={g._id}
                             game={g}
-                            gameNum={i+1}
+                            gameNum={i + 1}
                             handleChange={this.handleChange}
                         />))
                     }
-                    <button className="btn btn-outline-success">Complete</button>
+                    <button className="btn btn-outline-success">Save    </button>
                 </div>
             </form>
         );
     }
 }
 
-export default CompleteRoundForm;
+export default PlaceBetsForm;

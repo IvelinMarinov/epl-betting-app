@@ -1,17 +1,16 @@
-import React, { Component, Fragment } from 'react';
-import AdminService from '../services/admin-service';
-import CompleteRoundForm from '../components/CompleteRound/complete-round-form';
+import React, { Component } from 'react';
+import BetsService from '../services/bets-service';
+import PlaceBetsForm from '../components/PlaceBets/place-bets-form';
 
 const ErrorMessagesToRender = [
-    'There are no active rounds, please set up a new round!',
-    'More than one active round, please contact your db admin!'
+    'There is no active round currently, please come back again later!'
 ]
 
-class CompleteRound extends Component {
-    static AdminService = new AdminService();
+class PlaceBets extends Component {
+    static BetsService = new BetsService();
 
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
             fixture: null,
@@ -23,9 +22,9 @@ class CompleteRound extends Component {
 
     async componentWillMount() {
         try {
-            let response = await CompleteRound.AdminService.getActiveRound();
+            let response = await PlaceBets.BetsService.getActiveRound();
 
-            if(ErrorMessagesToRender.includes(response.message)) {
+            if (ErrorMessagesToRender.includes(response.message)) {
                 this.setState({
                     hasError: true,
                     error: response.message,
@@ -44,35 +43,37 @@ class CompleteRound extends Component {
                 isDataFetched: true
             })
         } catch (err) {
-            console.log(err)
+            //console.log(err)
             this.setState({
                 hasError: true,
                 error: err.message
             })
+
+            console.log(this.state.error)
         }
     }
 
     render() {
         const { isDataFetched, fixture, hasError, error } = this.state
 
-        if(!isDataFetched) {
+        if (!isDataFetched) {
             return (
                 <span>Loading...</span>
             );
         }
 
-        if(hasError) {
+        if (hasError) {
             return (
                 <h3>{error}</h3>
             );
         }
 
         return (
-                <CompleteRoundForm
-                    fixture={fixture}
-                />
-        )
+            <PlaceBetsForm
+                fixture={fixture}
+            />
+        );
     }
 }
 
-export default CompleteRound;
+export default PlaceBets;

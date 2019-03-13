@@ -1,6 +1,6 @@
 import { get, post } from "../data/crud";
 
-class StandingsService {
+class AdminService {
     constructor() {
         this.baseUrl = 'http://localhost:5000/admin';
         this.allTeamsUrl = `${this.baseUrl}/all-teams`;
@@ -26,4 +26,4 @@ class StandingsService {
     }
 }
 
-export default StandingsService;
+export default AdminService;
