@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import StandingsService from '../services/standings-service';
 
-const logos = require.context('../static/images', true);
+//const logos = require.context('../static/images', true);
 
 class ClubStandings extends Component {
     static standingsService = new StandingsService();
@@ -40,7 +40,7 @@ class ClubStandings extends Component {
             sortedStats.push({
                 name: teamStat.team.name,
                 shortName: teamStat.team.shortName,
-                imageUrl: logos(`./${teamStat.team.shortName}.svg`),
+                //imageUrl: logos(`./${teamStat.team.shortName}.svg`),
                 //imageUrl: `static/images/${teamStat.team.name}.svg`,
                 gamesPlayed: teamStat.gamesPlayed,
                 wins: teamStat.wins,

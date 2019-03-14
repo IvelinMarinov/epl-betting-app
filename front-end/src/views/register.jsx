@@ -29,7 +29,7 @@ class Register extends Component {
 
         event.preventDefault();
         const { username, email, password, dateOfBirth } = this.state;
-        const body = {username, email, password, dateOfBirth}
+        const body = { username, email, password, dateOfBirth }
 
         try {
             let response = await Register.authService.register(body);
@@ -41,7 +41,7 @@ class Register extends Component {
             this.setState({
                 hasRegisterred: true
             })
-        } catch(err) {
+        } catch (err) {
 
         }
 
@@ -56,7 +56,7 @@ class Register extends Component {
                 <Redirect to="/" />
             );
         }
-        
+
         if (hasRegisterred) {
             return (
                 <Redirect to="/login" />
@@ -65,56 +65,60 @@ class Register extends Component {
 
         return (
             <div className="container-fluid">
-                <h1>Register</h1>
-                <form onSubmit={this.handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="email">Email</label>
-                        <input
-                            type="text"
-                            name="email"
-                            className="form-control"
-                            placeholder="Enter your email"
-                            value={email}
-                            onChange={this.handleChange}
-                        />
-                        <br />
+                <div className="col-sm-6">
+                    <br />
+                    <h1>Register</h1>
+                    <br />
+                    <form onSubmit={this.handleSubmit}>
+                        <div className="form-group">
+                            <label htmlFor="email">Email</label>
+                            <input
+                                type="text"
+                                name="email"
+                                className="form-control"
+                                placeholder="Enter your email"
+                                value={email}
+                                onChange={this.handleChange}
+                            />
+                            <br />
 
-                        <label htmlFor="username">Username</label>
-                        <input
-                            type="text"
-                            name="username"
-                            className="form-control"
-                            placeholder="Choose your username"
-                            value={username}
-                            onChange={this.handleChange}
-                        />
-                        <br />
+                            <label htmlFor="username">Username</label>
+                            <input
+                                type="text"
+                                name="username"
+                                className="form-control"
+                                placeholder="Choose your username"
+                                value={username}
+                                onChange={this.handleChange}
+                            />
+                            <br />
 
-                        <label htmlFor="password">Password</label>
-                        <input
-                            type="password"
-                            name="password"
-                            className="form-control"
-                            placeholder="Choose your password"
-                            value={password}
-                            onChange={this.handleChange}
-                        />
-                        <br/>
+                            <label htmlFor="password">Password</label>
+                            <input
+                                type="password"
+                                name="password"
+                                className="form-control"
+                                placeholder="Choose your password"
+                                value={password}
+                                onChange={this.handleChange}
+                            />
+                            <br />
 
-                        <label htmlFor="dateOfBirth">Date of birth</label>
-                        <input
-                            type="date"
-                            name="dateOfBirth"
-                            className="form-control"
-                            placeholder="Enter your date of birth"
-                            value={dateOfBirth}
-                            onChange={this.handleChange}
-                        />
-                        <br/>
+                            <label htmlFor="dateOfBirth">Date of birth</label>
+                            <input
+                                type="date"
+                                name="dateOfBirth"
+                                className="form-control"
+                                placeholder="Enter your date of birth"
+                                value={dateOfBirth}
+                                onChange={this.handleChange}
+                            />
+                            <br />
 
-                        <button type="submit" className="btn btn-success">Register</button>
-                    </div>
-                </form>
+                            <button type="submit" className="btn btn-lg btn-outline-success">Register</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         );
     }

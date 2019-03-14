@@ -1,6 +1,10 @@
 body {
   margin: 0;
   padding: 0;
+  /* background-image: url('https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Premier_League_Logo.svg/1200px-Premier_League_Logo.svg.png');
+  background-repeat: no-repeat;
+    background-size: 50%;
+    background-position-y: 120px; */
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -23,5 +27,11 @@ img {
 }
 
 .active {
-  background-color: red;
+  border: #fdb813 2px solid;  
+  border-radius: 5px;
+  color: red;
+}
+
+.navbar-dark .navbar-nav .active>.nav-link, .navbar-dark .navbar-nav .nav-link.active, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .show>.nav-link {
+  color: #fdb813;
 }

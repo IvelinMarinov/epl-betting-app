@@ -75,11 +75,13 @@ class Login extends Component {
         }
 
         return (
-            <div className="col-sm-6">
-                <div className="container-fluid">
+            <div className="container-fluid">
+                <div className="col-sm-6">
+                    <br />
                     <h1>Login</h1>
+                    <br />
                     <form onSubmit={this.handleSubmit} className="form-group">
-                        <div className="form-control">
+                        <div className="form-group">
                             <label htmlFor="email">Email</label>
                             <input
                                 type="text"
@@ -102,7 +104,7 @@ class Login extends Component {
                             />
                             <br />
 
-                            <button type="submit" className="btn btn-success">Login</button>
+                            <button type="submit" className="btn btn-lg btn-outline-success">Login</button>
                         </div>
                     </form>
                 </div>

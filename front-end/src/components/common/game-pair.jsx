@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
-const ClubLogos = require.context('../../static/images', true);
+const ClubLogos = require.context('../../static/images/club-logos', true);
 
 class GamePair extends Component {
     constructor(props) {
