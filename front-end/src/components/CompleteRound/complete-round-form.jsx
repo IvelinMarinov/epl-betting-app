@@ -22,7 +22,7 @@ class CompleteRoundForm extends Component {
         }
     }
 
-    handleChange = (event, gameId)  => {
+    handleChange = (event, gameId) => {
         const [homeOrAway, gameNum] = event.target.id.split('_');
 
         this.setState({
@@ -34,20 +34,33 @@ class CompleteRoundForm extends Component {
     handleSubmit = async (event) => {
         event.preventDefault();
 
-        const { fixture } = this.props
-
         const values = Object.values(this.state);
-        if(values.filter(v => v === '').length) {
+        if (values.filter(v => v === '').length) {
             console.log('All scores are required');
             return;
         }
-      
+
+        let reqBody = this.transformStateToReqBody();
+
+        try {
+            var response = await CompleteRoundForm.AdminService.completeRound(reqBody);
+            if (!response.success) {
+                throw new Error(response.message);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    transformStateToReqBody() {
+        const { fixture } = this.props
         let games = {}
+
         for (let [key, value] of Object.entries(this.state)) {
-            const [ prop, gameNum ] = key.split('_');
+            const [prop, gameNum] = key.split('_');
 
             let gameNumAdded = Object.keys(games).filter(k => k === gameNum);
-            if(gameNumAdded.length === 0) {
+            if (gameNumAdded.length === 0) {
                 games[gameNum] = {
                     home_team_score: '0',
                     away_team_score: '0',
@@ -55,22 +68,22 @@ class CompleteRoundForm extends Component {
                 }
             }
 
-            if(prop.trim() === 'home') {
+            if (prop.trim() === 'home') {
                 games[gameNum].home_team_score = value
-            } else if(prop.trim() === 'away') {
+            } else if (prop.trim() === 'away') {
                 games[gameNum].away_team_score = value
             } else {
                 games[gameNum].game_id = value
             }
 
             //set sign
-            for(let game of Object.values(games)) {
+            for (let game of Object.values(games)) {
                 let homeGoals = Number(game.home_team_score);
                 let awayGoals = Number(game.away_team_score);
 
-                if(homeGoals > awayGoals) {
+                if (homeGoals > awayGoals) {
                     game.sign = '1'
-                } else if(homeGoals < awayGoals) {
+                } else if (homeGoals < awayGoals) {
                     game.sign = '2'
                 } else {
                     game.sign = 'X'
@@ -84,16 +97,7 @@ class CompleteRoundForm extends Component {
         }
 
         console.log(reqBody)
-
-        try {
-            var response = await CompleteRoundForm.AdminService.completeRound(reqBody);
-
-            if (!response.success) {
-                throw new Error(response.message);
-            }
-        } catch(err) {
-            console.log(err);
-        }
+        return reqBody;
     }
 
     render() {
@@ -108,7 +112,7 @@ class CompleteRoundForm extends Component {
                         fixture.gameStats.map((g, i) => (<GamePair
                             key={g._id}
                             game={g}
-                            gameNum={i+1}
+                            gameNum={i + 1}
                             handleChange={this.handleChange}
                         />))
                     }

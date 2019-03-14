@@ -16,6 +16,8 @@ class GamePair extends Component {
 
         this.setState({
             game: game,
+            homeGoals: game.homeTeamGoals,
+            awayGoals: game.awayTeamGoals,
             gameNum: gameNum,
             handleChange: handleChange
         })
@@ -25,10 +27,26 @@ class GamePair extends Component {
         return ClubLogos(`./${teamName}.svg`)
     }
 
+    handleGoalsChange = (e, homeOrAway) => {
+        if (homeOrAway === 'home') {
+            this.setState({
+                homeGoals: e.target.value
+            })
+        } else {
+            this.setState({
+                awayGoals: e.target.value
+            })
+        }
+    }
+
     render() {
         const { game, gameNum, handleChange } = this.state;
         const homeTeam = game.homeTeamId;
         const awayTeam = game.awayTeamId;
+        //const homeGoals = game.homeTeamGoals;
+        const homeGoals = this.state.homeGoals;
+        const awayGoals = this.state.awayGoals;
+
 
         if (game) {
             return (
@@ -40,9 +58,13 @@ class GamePair extends Component {
                                 <span>{homeTeam.name}</span>
                                 &nbsp;
                                 <input
-                                    onChange={(e) => handleChange(e, game._id)}
-                                    id ={`home_${gameNum}`}
+                                    onChange={(e) => {
+                                        this.handleGoalsChange(e, 'home');
+                                        handleChange(e, game._id);
+                                    }}
+                                    id={`home_${gameNum}`}
                                     type="number"
+                                    value={homeGoals}
                                     min="0"
                                     max="9"
                                     step="1"
@@ -56,8 +78,12 @@ class GamePair extends Component {
                         <div className="row col-sm-4">
                             <div>
                                 <input
-                                    onChange={(e) => handleChange(e, game._id)}
-                                    id ={`away_${gameNum}`}
+                                    onChange={(e) => {
+                                        this.handleGoalsChange(e, 'away');
+                                        handleChange(e, game._id);
+                                    }}
+                                    id={`away_${gameNum}`}
+                                    value={awayGoals}
                                     type="number"
                                     min="0"
                                     max="9"
