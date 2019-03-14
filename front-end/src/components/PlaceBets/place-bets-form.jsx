@@ -34,11 +34,11 @@ class PlaceBetsForm extends Component {
     handleSubmit = async (event) => {
         event.preventDefault();
 
-        const values = Object.values(this.state);
-        if (values.filter(v => v === '').length) {
-            console.log('All scores are required');
-            return;
-        }
+        // const values = Object.values(this.state);
+        // if (values.filter(v => v === '').length) {
+        //     console.log('All scores are required');
+        //     return;
+        // }
 
         let reqBody = this.transformStateToRequestBody();
 

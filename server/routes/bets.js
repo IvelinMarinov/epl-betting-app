@@ -51,9 +51,9 @@ router.get('/get-active-round', async (req, res) => {
 function GetGameStatsWithExistingBets(fixture, bets) {
     let arr = [];
 
-    for(let game of fixture.gameStats) {
+    for (let game of fixture.gameStats) {
         //game.toObject();
-        
+
         let bet = bets.filter(b => b.gameId == game._id)[0];
 
         game['homeTeamGoals'] = bet.homeTeamGoals
@@ -65,16 +65,24 @@ function GetGameStatsWithExistingBets(fixture, bets) {
 }
 
 router.post('/submit', async (req, res) => {
-    // console.log(req.user._id);
-    // console.log('-----------------------------')
-    // console.log(req.body)
     const userId = req.user._id;
+    const gameIds = Object.values(req.body)
+        .filter(g => g.gameId !== '')
+        .map(g => g.gameId);
+
+    console.log(gameIds)
 
     try {
+        //delete existing bets if any
+        await UserBets.remove({
+            userId: userId,
+            gameId: { $in: gameIds }
+        })
 
-        UserBets.remove({})
-
+        //create new bets
         for (let game of Object.values(req.body)) {
+            console.log('-------------------')
+            console.log(game)
             game.userId = userId;
             await new UserBets(game).save();
         }
