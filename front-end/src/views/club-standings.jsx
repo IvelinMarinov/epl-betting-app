@@ -78,7 +78,7 @@ class ClubStandings extends Component {
         }
 
         return (
-            <div className="container-fluid">
+            <div className="container col-sm-offset-1 col-sm-10">
                 {/* EPL Standings */}
                 <br/>
                 <table className="table">

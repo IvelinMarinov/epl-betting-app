@@ -106,7 +106,8 @@ class CompleteRoundForm extends Component {
         return (
             <form onSubmit={this.handleSubmit}>
                 <div className="container col-sm-offset-1 col-sm-10">
-                    <h3 className="text-center">Complete round {fixture.round}</h3>
+                    <br/>
+                    <h3>Complete Round {fixture.round}</h3>
                     <hr />
                     {
                         fixture.gameStats.map((g, i) => (<GamePair

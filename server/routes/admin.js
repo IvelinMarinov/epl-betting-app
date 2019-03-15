@@ -9,7 +9,7 @@ const router = new express.Router();
 
 router.get('/all-teams', async (req, res) => {
   try {
-    let teams = await Team.find({}, 'shortName code')
+    let teams = await Team.find({}, 'name code')
 
     if (teams.length === 0) {
       return res.status(404).json({

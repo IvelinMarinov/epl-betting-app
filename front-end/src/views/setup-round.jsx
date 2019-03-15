@@ -2,8 +2,6 @@ import React, { Component, Fragment } from 'react';
 import AdminService from '../services/admin-service';
 import SetupRoundForm from '../components/RoundSetup/setup-round-form';
 
-const ClubLogos = require.context('../static/images', true);
-
 class RoundSetup extends Component {
     static AdminService = new AdminService();
 
@@ -36,11 +34,16 @@ class RoundSetup extends Component {
                 throw new Error(response.message);
             }
 
-            const teamsData = response.data.map(function (t) {
+            console.log(response)
+
+            const teamsData = response.data
+            .sort(function(a,b) {
+                return a.name.localeCompare(b.name)
+            })
+            .map(function (t) {
                 return {
-                    code: t.code,
-                    id: t._id,
-                    imageUrl: ClubLogos(`./${t.shortName}.svg`)
+                    name: t.name,
+                    id: t._id
                 }
             });
 
@@ -69,14 +72,21 @@ class RoundSetup extends Component {
         if (!isRoundSelected) {
             return (
                 <Fragment>
+                    <div className="container col-sm-offset-1 col-sm-10">
+                    <br/>
                     <h3>Please select round</h3>
-                    <select onChange={this.handleDropDownChange}>
+                    <hr/>
+                    <div className="col-sm-2 row">
+                    <select className="form-control" onChange={this.handleDropDownChange}>
                         {
                             this.getRoundsArray().map(i => (
                                 <option key={i} value={i}>Round {i}</option>
                             ))
                         }
                     </select>
+                    </div>
+                    </div>
+                    
                 </Fragment>
             )
         }

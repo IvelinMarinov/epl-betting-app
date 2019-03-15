@@ -51,53 +51,69 @@ class GamePair extends Component {
         if (game) {
             return (
                 <Fragment>
-                    <div className="row">
-                        <div className="row col-sm-4">
-                            <img src={this.getTeamLogoUrl(homeTeam.shortName)} alt="" />
-                            <div>
-                                <span>{homeTeam.name}</span>
+                    <div className="container-fluid">
+                        <div className="row">
+                            {/* HOME TEAM SECTION */}
+                            <div className="row col-sm-4">
+                                <img src={this.getTeamLogoUrl(homeTeam.shortName)} alt="" />
+                                &nbsp;&nbsp;
+                                <h5>{homeTeam.name}</h5>
                                 &nbsp;
-                                <input
-                                    onChange={(e) => {
-                                        this.handleGoalsChange(e, 'home');
-                                        handleChange(e, game._id);
-                                    }}
-                                    id={`home_${gameNum}`}
-                                    type="number"
-                                    value={homeGoals}
-                                    min="0"
-                                    max="9"
-                                    step="1"
-                                    required
-                                />
+                                <div className="ml-auto">
+                                    <input
+                                        className="form-control"
+                                        onChange={(e) => {
+                                            this.handleGoalsChange(e, 'home');
+                                            handleChange(e, game._id);
+                                        }}
+                                        id={`home_${gameNum}`}
+                                        type="number"
+                                        value={homeGoals}
+                                        min="0"
+                                        max="9"
+                                        step="1"
+                                        required
+                                    />
+                                </div>
                             </div>
-                        </div>
-                        <div className="row col-sm-2">
-                            <h4 className="text-center">VS</h4>
-                        </div>
-                        <div className="row col-sm-4">
-                            <div>
-                                <input
-                                    onChange={(e) => {
-                                        this.handleGoalsChange(e, 'away');
-                                        handleChange(e, game._id);
-                                    }}
-                                    id={`away_${gameNum}`}
-                                    value={awayGoals}
-                                    type="number"
-                                    min="0"
-                                    max="9"
-                                    step="1"
-                                    required
-                                />
-                                <span>{awayTeam.name}</span>
-                                &nbsp;
+
+                            {/* VS SECTION         */}
+                            <div className="col-sm-1 text-center">
+                                {/* &nbsp;&nbsp;&nbsp; */}
+                                <h4 className="text-center">VS</h4>
+                                {/* &nbsp;&nbsp;&nbsp; */}
                             </div>
-                            <img src={this.getTeamLogoUrl(awayTeam.shortName)} alt="" />
+
+                            {/* AWAY TEAM SECTION */}
+                            <div className="row col-sm-4">
+                                <div className="mr-auto">
+                                    <input
+                                        className="form-control"
+                                        onChange={(e) => {
+                                            this.handleGoalsChange(e, 'away');
+                                            handleChange(e, game._id);
+                                        }}
+                                        id={`away_${gameNum}`}
+                                        value={awayGoals}
+                                        type="number"
+                                        min="0"
+                                        max="9"
+                                        step="1"
+                                        required
+                                    />
+                                </div>
+
+                                <div className="row ml-auto">
+                                    &nbsp;
+                                <h5>{awayTeam.name}</h5>
+                                    &nbsp;&nbsp;
+                                <img src={this.getTeamLogoUrl(awayTeam.shortName)} alt="" />
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <hr />
-                </Fragment>
+                </Fragment >
             );
         }
     }

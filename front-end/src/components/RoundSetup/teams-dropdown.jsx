@@ -6,14 +6,16 @@ class TeamsDropDown extends Component {
         const { teamsData, handleChange, idProp } = this.props;
 
         return (
-            <select id={idProp} onChange={handleChange}>
+            <div className="form-group">
+            <select className="form-control" id={idProp} onChange={handleChange} >
                 <option value="" disabled selected>Select team</option>
                 {
                     teamsData.map(t => (
-                        <option key={t.id} value={t.id}>{t.code}</option>
+                        <option key={t.id} value={t.id}>{t.name}</option>
                     ))
                 }
             </select>
+            </div>
         );
     }
 }

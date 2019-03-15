@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import AdminService from '../../services/admin-service';
 import TeamsDropDown from './teams-dropdown';
+import DropDownPair from './dropdown-pair';
 
 class SetupRoundForm extends Component {
     static AdminService = new AdminService();
@@ -47,17 +48,17 @@ class SetupRoundForm extends Component {
 
         let reqBody = {}
         for (let [key, value] of Object.entries(this.state)) {
-            const [ homeOrAway, gameNum ] = key.split('_');
+            const [homeOrAway, gameNum] = key.split('_');
 
             let gameNumAdded = Object.keys(reqBody).filter(k => k === gameNum);
-            if(gameNumAdded.length === 0) {
+            if (gameNumAdded.length === 0) {
                 reqBody[gameNum] = {
                     home_team_id: 'X',
                     away_team_id: 'X'
                 }
             }
 
-            if(homeOrAway.trim() === 'home') {
+            if (homeOrAway.trim() === 'home') {
                 reqBody[gameNum].home_team_id = value
             } else {
                 reqBody[gameNum].away_team_id = value
@@ -74,17 +75,27 @@ class SetupRoundForm extends Component {
         try {
             let response = await SetupRoundForm.AdminService.saveRoundData(reqBody);
             console.log(response)
-            
+
             if (!response.success) {
                 throw new Error(response.message);
             }
-            
+
             //TODO
             //Show success message
 
-        } catch(err) {
+        } catch (err) {
             console.log(err)
         }
+    }
+
+    getGameNumbersArray() {
+        let arr = [];
+
+        for (let i = 1; i <= 10; i++) {
+            arr.push(i);
+        }
+
+        return arr;
     }
 
     render() {
@@ -93,213 +104,21 @@ class SetupRoundForm extends Component {
         return (
             <Fragment>
                 <form onSubmit={this.handleSubmit}>
-                    <div className="container col-sm-offset-2 col-sm-6">
-                        <h3 className="text-center">Setup games for Round {selectedRound}</h3>
+                <div className="container col-sm-offset-1 col-sm-10">
+                    <br/>
+                        <h3>Setup Games for Round {selectedRound}</h3>
                         <hr />
 
-                        <div className="row">
-                            <div className="col-sm-2">
-                                <span>Game 1 </span>
-                            </div>
-                            <div className="col-sm-offset-2 col-sm-6">
-                                <TeamsDropDown
-                                    idProp="home_1"
+                        {
+                            this.getGameNumbersArray().map(i =>
+                                <DropDownPair
+                                    key={i}
+                                    gameNum={i}
                                     teamsData={teamsDropDownData}
                                     handleChange={this.handleChange}
                                 />
-                                &nbsp;&nbsp;&nbsp;
-                                <span>VS</span>
-                                &nbsp;&nbsp;&nbsp;
-                                <TeamsDropDown
-                                    idProp="away_1"
-                                    teamsData={teamsDropDownData}
-                                    handleChange={this.handleChange}
-                                />
-                            </div>
-                        </div>
-                        <hr />
-
-                        <div className="row">
-                            <div className="col-sm-2">
-                                <span>Game 2 </span>
-                            </div>
-                            <div className="col-sm-offset-2 col-sm-6">
-                                <TeamsDropDown
-                                    idProp="home_2"
-                                    teamsData={teamsDropDownData}
-                                    handleChange={this.handleChange}
-                                />
-                                &nbsp;&nbsp;&nbsp;
-                            <span>VS</span>
-                                &nbsp;&nbsp;&nbsp;
-                                <TeamsDropDown
-                                    idProp="away_2"
-                                    teamsData={teamsDropDownData}
-                                    handleChange={this.handleChange}
-                                />
-                            </div>
-                        </div>
-                        <hr />
-
-                        <div className="row">
-                            <div className="col-sm-2">
-                                <span>Game 3 </span>
-                            </div>
-                            <div className="col-sm-offset-2 col-sm-6">
-                                <TeamsDropDown
-                                    idProp="home_3"
-                                    teamsData={teamsDropDownData}
-                                    handleChange={this.handleChange}
-                                />                                &nbsp;&nbsp;&nbsp;
-                            <span>VS</span>
-                                &nbsp;&nbsp;&nbsp;
-                                <TeamsDropDown
-                                    idProp="away_3"
-                                    teamsData={teamsDropDownData}
-                                    handleChange={this.handleChange}
-                                />                            </div>
-                        </div>
-                        <hr />
-
-                        <div className="row">
-                            <div className="col-sm-2">
-                                <span>Game 4 </span>
-                            </div>
-                            <div className="col-sm-offset-2 col-sm-6">
-                                <TeamsDropDown
-                                    idProp="home_4"
-                                    teamsData={teamsDropDownData}
-                                    handleChange={this.handleChange}
-                                />                                &nbsp;&nbsp;&nbsp;
-                            <span>VS</span>
-                                &nbsp;&nbsp;&nbsp;
-                                <TeamsDropDown
-                                    idProp="away_4"
-                                    teamsData={teamsDropDownData}
-                                    handleChange={this.handleChange}
-                                />                            </div>
-                        </div>
-                        <hr />
-
-                        <div className="row">
-                            <div className="col-sm-2">
-                                <span>Game 5 </span>
-                            </div>
-                            <div className="col-sm-offset-2 col-sm-6">
-                                <TeamsDropDown
-                                    idProp="home_5"
-                                    teamsData={teamsDropDownData}
-                                    handleChange={this.handleChange}
-                                />                                &nbsp;&nbsp;&nbsp;
-                            <span>VS</span>
-                                &nbsp;&nbsp;&nbsp;
-                                <TeamsDropDown
-                                    idProp="away_5"
-                                    teamsData={teamsDropDownData}
-                                    handleChange={this.handleChange}
-                                />                            </div>
-                        </div>
-                        <hr />
-
-                        <div className="row">
-                            <div className="col-sm-2">
-                                <span>Game 6 </span>
-                            </div>
-                            <div className="col-sm-offset-2 col-sm-6">
-                                <TeamsDropDown
-                                    idProp="home_6"
-                                    teamsData={teamsDropDownData}
-                                    handleChange={this.handleChange}
-                                />                                &nbsp;&nbsp;&nbsp;
-                            <span>VS</span>
-                                &nbsp;&nbsp;&nbsp;
-                                <TeamsDropDown
-                                    idProp="away_6"
-                                    teamsData={teamsDropDownData}
-                                    handleChange={this.handleChange}
-                                />                            </div>
-                        </div>
-                        <hr />
-
-                        <div className="row">
-                            <div className="col-sm-2">
-                                <span>Game 7 </span>
-                            </div>
-                            <div className="col-sm-offset-2 col-sm-6">
-                                <TeamsDropDown
-                                    idProp="home_7"
-                                    teamsData={teamsDropDownData}
-                                    handleChange={this.handleChange}
-                                />                                &nbsp;&nbsp;&nbsp;
-                            <span>VS</span>
-                                &nbsp;&nbsp;&nbsp;
-                                <TeamsDropDown
-                                    idProp="away_7"
-                                    teamsData={teamsDropDownData}
-                                    handleChange={this.handleChange}
-                                />                            </div>
-                        </div>
-                        <hr />
-
-                        <div className="row">
-                            <div className="col-sm-2">
-                                <span>Game 8 </span>
-                            </div>
-                            <div className="col-sm-offset-2 col-sm-6">
-                                <TeamsDropDown
-                                    idProp="home_8"
-                                    teamsData={teamsDropDownData}
-                                    handleChange={this.handleChange}
-                                />                                &nbsp;&nbsp;&nbsp;
-                            <span>VS</span>
-                                &nbsp;&nbsp;&nbsp;
-                                <TeamsDropDown
-                                    idProp="away_8"
-                                    teamsData={teamsDropDownData}
-                                    handleChange={this.handleChange}
-                                />                            </div>
-                        </div>
-                        <hr />
-
-                        <div className="row">
-                            <div className="col-sm-2">
-                                <span>Game 9 </span>
-                            </div>
-                            <div className="col-sm-offset-2 col-sm-6">
-                                <TeamsDropDown
-                                    idProp="home_9"
-                                    teamsData={teamsDropDownData}
-                                    handleChange={this.handleChange}
-                                />                                &nbsp;&nbsp;&nbsp;
-                            <span>VS</span>
-                                &nbsp;&nbsp;&nbsp;
-                                <TeamsDropDown
-                                    idProp="away_9"
-                                    teamsData={teamsDropDownData}
-                                    handleChange={this.handleChange}
-                                />                            </div>
-                        </div>
-                        <hr />
-
-                        <div className="row">
-                            <div className="col-sm-2">
-                                <span>Game 10</span>
-                            </div>
-                            <div className="col-sm-offset-2 col-sm-6">
-                                <TeamsDropDown
-                                    idProp="home_10"
-                                    teamsData={teamsDropDownData}
-                                    handleChange={this.handleChange}
-                                />                                &nbsp;&nbsp;&nbsp;
-                            <span>VS</span>
-                                &nbsp;&nbsp;&nbsp;
-                                <TeamsDropDown
-                                    idProp="away_10"
-                                    teamsData={teamsDropDownData}
-                                    handleChange={this.handleChange}
-                                />                            </div>
-                        </div>
-                        <hr />
+                            )
+                        }                        
 
                         <button className="btn btn-outline-success" type="submit">Submit</button>
 

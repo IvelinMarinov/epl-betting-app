@@ -47,7 +47,7 @@ class PlaceBetsForm extends Component {
             if (!response.success) {
                 throw new Error(response.message);
             }
-        } catch(err) {
+        } catch (err) {
             console.log(err);
         }
     }
@@ -98,7 +98,8 @@ class PlaceBetsForm extends Component {
         return (
             <form onSubmit={this.handleSubmit}>
                 <div className="container col-sm-offset-1 col-sm-10">
-                    <h3 className="text-center">Your bets for round {fixture.round}</h3>
+                    <br />
+                    <h3>Your bets for round {fixture.round}</h3>
                     <hr />
                     {
                         fixture.gameStats.map((g, i) => (<GamePair
