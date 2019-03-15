@@ -61,7 +61,8 @@ class BetStandings extends Component {
 
         return (
             <div className="container-fluid">
-                Bet Standings
+            <br/>
+                {/* Bet Standings */}
                 <table className="table">
                     <thead className="thead-dark">
                         <tr>

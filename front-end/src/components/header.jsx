@@ -14,7 +14,7 @@ class Header extends Component {
     render() {
         const { username, isLoggedIn, isAdmin } = this.props;
 
-        let adminLinks, authLinks
+        let adminLinks, authLinks, placeBets
 
         if (isAdmin) {
             adminLinks =
@@ -25,12 +25,13 @@ class Header extends Component {
         }
 
         if (isLoggedIn) {
-            authLinks =
-                <Fragment>
-                    <CustomNavLink to="/bet" text="Place Bets" />
+            placeBets = <CustomNavLink to="/bet" text="Place Bets" />
+            authLinks = (
+                <Fragment>                    
                     <CustomNavLink to="/logout" text="Logout" />
-                    <span>Hello, {username}!</span>
+                    <span className="header-greeting">Hello, {username}!</span>
                 </Fragment>
+            );            
         } else {
             authLinks =
                 <Fragment>
@@ -41,7 +42,7 @@ class Header extends Component {
 
         return (
             <header>
-                <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
+                <nav className="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
                     <Link to="/" className="navbar-brand">
                         <img src={EplLogo('./premier-league-logo-header.png')}  alt="EPL Betting" height="50" />
                     </Link>
@@ -49,7 +50,11 @@ class Header extends Component {
                     <ul className="navbar-nav">
                         <CustomNavLink to="/standings/premier-league" text="EPL Standings" />
                         <CustomNavLink to="/standings/betting" text="Bet Standings" />
+                        {placeBets}
                         {adminLinks}
+                    </ul>
+
+                    <ul className="navbar-nav ml-auto">
                         {authLinks}
                     </ul>
                 </nav>

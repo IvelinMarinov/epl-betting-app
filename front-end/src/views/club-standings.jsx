@@ -79,7 +79,8 @@ class ClubStandings extends Component {
 
         return (
             <div className="container-fluid">
-                EPL Standings
+                {/* EPL Standings */}
+                <br/>
                 <table className="table">
                     <thead className="thead-dark">
                         <tr>
