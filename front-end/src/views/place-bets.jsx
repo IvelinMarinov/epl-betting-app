@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import BetsService from '../services/bets-service';
 import PlaceBetsForm from '../components/PlaceBets/place-bets-form';
+import Loading from '../components/common/loading';
+
 
 const ErrorMessagesToRender = [
     'There is no active round currently, please come back again later!'
@@ -20,7 +22,8 @@ class PlaceBets extends Component {
         }
     }
 
-    async componentWillMount() {
+    async componentWillMount() {      
+
         try {
             let response = await PlaceBets.BetsService.getActiveRound();
 
@@ -36,12 +39,14 @@ class PlaceBets extends Component {
                 throw new Error(response.message);
             }
 
-            console.log(response.data)
-
-            this.setState({
-                fixture: response.data,
-                isDataFetched: true
-            })
+            //Demo purposes only
+            setTimeout(() => {                
+                this.setState({
+                    fixture: response.data,
+                    isDataFetched: true
+                })
+            }, 700);            
+            
         } catch (err) {
             //console.log(err)
             this.setState({
@@ -58,7 +63,7 @@ class PlaceBets extends Component {
 
         if (!isDataFetched) {
             return (
-                <span>Loading...</span>
+                <Loading />
             );
         }
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import StandingsService from '../services/standings-service';
+import Loading from '../components/common/loading';
 
 class BetStandings extends Component {
     static standingsService = new StandingsService();
@@ -56,7 +57,7 @@ class BetStandings extends Component {
         let rank = 1;
 
         if (!isDataFetched) {
-            return (<span>Loading...</span>);
+            return <Loading />;
         }
 
         return (

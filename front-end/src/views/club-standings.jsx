@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import StandingsService from '../services/standings-service';
+import Loading from '../components/common/loading';
 
 //const logos = require.context('../static/images', true);
 
@@ -24,6 +25,7 @@ class ClubStandings extends Component {
             }
 
             this.processResponse(response);
+
         } catch (err) {
             console.log(err)
             this.setState({
@@ -55,7 +57,7 @@ class ClubStandings extends Component {
 
         sortedStats = sortedStats.sort(function (a, b) {
             var pointsSort = b.points - a.points;
-            if(pointsSort !== 0 ) {
+            if (pointsSort !== 0) {
                 return pointsSort
             }
 
@@ -74,13 +76,13 @@ class ClubStandings extends Component {
         let rank = 1;
 
         if (!isDataFetched) {
-            return (<span>Loading...</span>);
+            return <Loading />;
         }
 
         return (
             <div className="container col-sm-offset-1 col-sm-10">
                 {/* EPL Standings */}
-                <br/>
+                <br />
                 <table className="table">
                     <thead className="thead-dark">
                         <tr>
