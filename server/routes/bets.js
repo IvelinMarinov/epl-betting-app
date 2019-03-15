@@ -70,8 +70,6 @@ router.post('/submit', async (req, res) => {
         .filter(g => g.gameId !== '')
         .map(g => g.gameId);
 
-    console.log(gameIds)
-
     try {
         //delete existing bets if any
         await UserBets.remove({
@@ -81,8 +79,6 @@ router.post('/submit', async (req, res) => {
 
         //create new bets
         for (let game of Object.values(req.body)) {
-            console.log('-------------------')
-            console.log(game)
             game.userId = userId;
             await new UserBets(game).save();
         }

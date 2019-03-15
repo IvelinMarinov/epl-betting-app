@@ -1,8 +1,11 @@
 const express = require('express');
 const ObjectId = require('mongoose').Types.ObjectId;
 const Team = require('../models/Team');
+const TeamStats = require('../models/TeamStats');
 const Fixture = require('../models/Fixture');
 const Game = require('../models/Game');
+const UserBet = require('../models/UserBets');
+const User = require('../models/User');
 const DbErrorMsg = 'A database error occured';
 
 const router = new express.Router();
@@ -146,7 +149,7 @@ router.post('/complete-round', async (req, res) => {
   const { fixtureId, games } = req.body;
 
   let fixture = await Fixture.findById(fixtureId);
-  if(!fixture) {
+  if (!fixture) {
     return res.status(200).json({
       success: false,
       message: 'No such fixture found',
@@ -154,17 +157,73 @@ router.post('/complete-round', async (req, res) => {
     });
   }
 
-  for(let game of Object.values(games)) {
-    console.log(game)
+  //update game scores
+  for (let game of Object.values(games)) {    
 
     await Game.findByIdAndUpdate(game.game_id, {
       $set: {
         homeTeamGoals: game.home_team_score,
-        awayTeamGoals: game.away_team_score
+        awayTeamGoals: game.away_team_score,
+        sign: game.sign
       }
     })
+
+    //update team stats
+    let dbGame = await Game.findByIdAndUpdate(game.game_id);
+    let homeTeamId = dbGame.homeTeamId;
+    let awayTeamId = dbGame.awayTeamId;
+
+    await TeamStats.update(
+      { team: homeTeamId },
+      {
+        $inc: {
+          gamesPlayed: 1,
+          goalsScored: game.home_team_score,
+          goalsConceded: game.away_team_score,
+          points: getPoints(game.home_team_score - game.away_team_score),
+          wins: (game.home_team_score - game.away_team_score > 0 ? 1 : 0),
+          losses: (game.home_team_score - game.away_team_score < 0 ? 1 : 0),
+          draws: (game.home_team_score - game.away_team_score == 0 ? 1 : 0)
+        }
+      })
+
+    await TeamStats.update(
+      { team: awayTeamId },
+      {
+        $inc: {
+          gamesPlayed: 1,
+          goalsScored: game.away_team_score,
+          goalsConceded: game.home_team_score,
+          points: getPoints(game.away_team_score - game.home_team_score),
+          wins: (game.away_team_score - game.home_team_score > 0 ? 1 : 0),
+          losses: (game.away_team_score - game.home_team_score < 0 ? 1 : 0),
+          draws: (game.away_team_score - game.home_team_score == 0 ? 1 : 0)
+        }
+      })
+
+    //update user stats
+    let userBets = await UserBet.find({ gameId: game.game_id });
+    let userIds = userBets.map(b => b.userId);
+
+    for (let userId of userIds) {
+      let userBet = userBets.filter(b => b.userId == userId)[0];
+
+      let pointsEarned = 0;
+
+      if (userBet.sign == game.sign) {
+        pointsEarned = 1;
+      }
+      if (userBet.homeTeamGoals == game.home_team_score && userBet.awayTeamGoals == game.away_team_score) {
+        pointsEarned = 3;
+      }
+
+      await User.findByIdAndUpdate(userId, {
+        $inc: { points: pointsEarned }
+      })
+    }
   }
 
+  //close round
   await Fixture.findByIdAndUpdate(fixtureId, {
     $set: {
       isActive: false,
@@ -172,8 +231,15 @@ router.post('/complete-round', async (req, res) => {
     }
   })
 
-  //TODO
-  //Loop through user bets and calculate points
+  function getPoints(balance) {
+    if (balance > 0) {
+      return 3;
+    } else if (balance < 0) {
+      return 0;
+    } else {
+      return 1;
+    }
+  }
 
   return res.status(200).json({
     success: true,

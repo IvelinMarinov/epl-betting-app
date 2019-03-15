@@ -42,17 +42,17 @@ class SetupRoundForm extends Component {
     handleSubmit = async (event) => {
         event.preventDefault();
 
-        const values = Object.values(this.state);
-        if(values.filter(v => v === '').length) {
-            this.showError('All fields are required');
-            return;
-        }
+        // const values = Object.values(this.state);
+        // if(values.filter(v => v === '').length) {
+        //     this.showError('All fields are required');
+        //     return;
+        // }
 
-        const uniqueValues = [...new Set(values)]
-        if(uniqueValues.length !== values.length) {
-            this.showError('The same team cannot be selected for more than one game');
-            return; 
-        }
+        // const uniqueValues = [...new Set(values)]
+        // if(uniqueValues.length !== values.length) {
+        //     this.showError('The same team cannot be selected for more than one game');
+        //     return; 
+        // }
 
         const reqBody = {
             round: this.props.selectedRound,
