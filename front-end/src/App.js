@@ -10,7 +10,8 @@ import Login from './views/login';
 import Register from './views/register'
 import Logout from './views/logout';
 import { UserProvider, defaultUserState } from './components/contexts/user-context';
-import { AuthorizedRouteWithContext } from './components/authorized-route.jsx';
+import AuthorizedRoute from './hocs/authorized-route';
+import AdminRoute from './hocs/admin-route';
 import ClubStandings from './views/club-standings';
 import BetStandings from './views/bet-standings';
 import RoundSetup from './views/setup-round';
@@ -56,9 +57,9 @@ class App extends Component {
                 <Route exact path="/logout" component={Logout} />
                 <Route exact path="/standings/premier-league" component={ClubStandings} />
                 <Route exact path="/standings/betting" component={BetStandings} />
-                <Route exact path="/bet" component={PlaceBetsView} />
-                <Route exact path="/admin/setup-round" component={RoundSetup} />
-                <Route exact path="/admin/complete-round" component={CompleteRound} />
+                <AuthorizedRoute exact path="/bet" component={PlaceBetsView} />
+                <AdminRoute exact path="/admin/setup-round" component={RoundSetup} />
+                <AdminRoute exact path="/admin/complete-round" component={CompleteRound} />
                 <Route component={NotFound} />
               </Switch>
             </UserProvider>

@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import AdminService from '../services/admin-service';
 import CompleteRoundForm from '../components/CompleteRound/complete-round-form';
 import Loading from '../components/common/loading';
+import { UserConsumer } from '../components/contexts/user-context';
 
 const ErrorMessagesToRender = [
     'There are no active rounds, please set up a new round!',
@@ -64,8 +65,8 @@ class CompleteRound extends Component {
     }
 
     render() {
-        const { isDataFetched, fixture, renderError, error } = this.state
-
+        const { isDataFetched, fixture, renderError, error } = this.state;
+       
         if (!isDataFetched) {
             return <Loading />;
         }
