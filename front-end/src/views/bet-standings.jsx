@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { toast } from 'react-toastify';
 import StandingsService from '../services/standings-service';
 import Loading from '../components/common/loading';
 
@@ -12,6 +13,13 @@ class BetStandings extends Component {
             data: [],
             isDataFetched: false,
             error: ''
+        }
+    }
+
+    showError = () => {
+        const {error} = this.state;        
+        if(error) {
+            toast.error(error);            
         }
     }
 
@@ -45,10 +53,10 @@ class BetStandings extends Component {
 
             this.processResponse(response);
         } catch (err) {
-            console.log(err)
             this.setState({
                 error: err.message
-            })
+            });
+            this.showError();
         }
     }
 

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { toast } from 'react-toastify';
 import GamePair from '../common/game-pair';
 import AdminService from '../../services/admin-service';
+
+const SuccessMsg = 'Round results submitted successfully';
 
 class CompleteRoundForm extends Component {
     static AdminService = new AdminService();
@@ -22,6 +25,14 @@ class CompleteRoundForm extends Component {
         }
     }
 
+    showError = (error) => {
+        toast.error(error);
+    }
+
+    showSuccess = (message) => {
+        toast.success(message);
+    }
+
     handleChange = (event, gameId) => {
         const [homeOrAway, gameNum] = event.target.id.split('_');
 
@@ -36,7 +47,7 @@ class CompleteRoundForm extends Component {
 
         const values = Object.values(this.state);
         if (values.filter(v => v === '').length) {
-            console.log('All scores are required');
+            this.showError('All scores are required');
             return;
         }
 
@@ -47,8 +58,9 @@ class CompleteRoundForm extends Component {
             if (!response.success) {
                 throw new Error(response.message);
             }
+            this.showSuccess(SuccessMsg);
         } catch (err) {
-            console.log(err);
+            this.showError(err.message);
         }
     }
 

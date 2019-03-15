@@ -1,16 +1,12 @@
 import React, { Component, Fragment } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { UserConsumer } from './contexts/user-context';
 import CustomNavLink from './common/custom-navlink';
 
 const EplLogo = require.context('../static/images/content', true);
 
 class Header extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-
+    
     render() {
         const { username, isLoggedIn, isAdmin } = this.props;
 

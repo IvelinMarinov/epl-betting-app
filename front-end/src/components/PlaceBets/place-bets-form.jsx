@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { toast } from 'react-toastify';
 import GamePair from '../common/game-pair';
 import BetsService from '../../services/bets-service';
+
+const SuccessMsg = 'Your bets have been successfully submitted';
 
 class PlaceBetsForm extends Component {
     static BetsService = new BetsService();
@@ -20,6 +23,14 @@ class PlaceBetsForm extends Component {
             home_9: '', away_9: '', id_9: '',
             home_10: '', away_10: '', id_10: '',
         }
+    }
+
+    showError = (error) => {
+        toast.error(error);
+    }
+
+    showSuccess = (message) => {
+        toast.success(message);
     }
 
     handleChange = (event, gameId) => {
@@ -47,8 +58,11 @@ class PlaceBetsForm extends Component {
             if (!response.success) {
                 throw new Error(response.message);
             }
+
+            this.showSuccess(SuccessMsg);
+
         } catch (err) {
-            console.log(err);
+            this.showError(err.message)
         }
     }
 
@@ -109,7 +123,7 @@ class PlaceBetsForm extends Component {
                             handleChange={this.handleChange}
                         />))
                     }
-                    <button className="btn btn-outline-success">Save    </button>
+                    <button className="btn btn-lg btn-outline-success">Save</button>
                 </div>
             </form>
         );

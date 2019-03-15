@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router'
+import { Redirect } from 'react-router';
+import { toast } from 'react-toastify';
 import AuthService from '../services/auth-service';
 import { UserConsumer } from '../components/contexts/user-context.js';
 
@@ -13,6 +14,13 @@ class Login extends Component {
             email: '',
             password: '',
             error: ''
+        }
+    }
+
+    showError = () => {
+        const {error} = this.state;        
+        if(error) {
+            toast.error(error);            
         }
     }
 
@@ -54,10 +62,10 @@ class Login extends Component {
                 });
 
             } catch (err) {
-                console.log(err)
                 this.setState({
                     error: err.message
-                })
+                });
+                this.showError();
             }
         });
 
@@ -90,6 +98,7 @@ class Login extends Component {
                                 placeholder="Enter your email"
                                 value={email}
                                 onChange={this.handleChange}
+                                required
                             />
                             <br />
 
@@ -101,6 +110,7 @@ class Login extends Component {
                                 placeholder="Enter your password"
                                 value={password}
                                 onChange={this.handleChange}
+                                required
                             />
                             <br />
 

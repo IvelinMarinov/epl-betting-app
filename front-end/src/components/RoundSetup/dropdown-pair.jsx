@@ -2,9 +2,6 @@ import React, { Component, Fragment } from 'react';
 import TeamsDropDown from './teams-dropdown';
 
 class DropDownPair extends Component {
-    constructor(props) {
-        super(props)
-    }
 
     render() {
         const { gameNum, teamsData, handleChange } = this.props

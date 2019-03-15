@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { toast } from 'react-toastify';
 import StandingsService from '../services/standings-service';
 import Loading from '../components/common/loading';
+
 
 //const logos = require.context('../static/images', true);
 
@@ -17,6 +19,13 @@ class ClubStandings extends Component {
         }
     }
 
+    showError = () => {
+        const {error} = this.state;        
+        if(error) {
+            toast.error(error);            
+        }
+    }
+
     async componentWillMount() {
         try {
             let response = await ClubStandings.standingsService.getClubStandings();
@@ -27,10 +36,11 @@ class ClubStandings extends Component {
             this.processResponse(response);
 
         } catch (err) {
-            console.log(err)
             this.setState({
                 error: err.message
             })
+
+            this.showError();
         }
     }
 

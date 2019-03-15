@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { toast } from 'react-toastify';
 import AdminService from '../services/admin-service';
 import SetupRoundForm from '../components/RoundSetup/setup-round-form';
 
@@ -8,13 +9,19 @@ class RoundSetup extends Component {
     constructor(props) {
         super(props);
 
-        console.log('initializing')
         this.state = {
             selectedRound: 0,
             isRoundSelected: false,
             isDataFetched: false,
             teamsDropDownData: [],
             error: ''
+        }
+    }
+
+    showError = () => {
+        const { error } = this.state;
+        if (error) {
+            toast.error(error);
         }
     }
 
@@ -37,24 +44,24 @@ class RoundSetup extends Component {
             console.log(response)
 
             const teamsData = response.data
-            .sort(function(a,b) {
-                return a.name.localeCompare(b.name)
-            })
-            .map(function (t) {
-                return {
-                    name: t.name,
-                    id: t._id
-                }
-            });
+                .sort(function (a, b) {
+                    return a.name.localeCompare(b.name)
+                })
+                .map(function (t) {
+                    return {
+                        name: t.name,
+                        id: t._id
+                    }
+                });
 
             this.setState({
                 teamsDropDownData: teamsData
             })
         } catch (err) {
-            console.log(err)
             this.setState({
                 error: err.message
-            })
+            });
+            this.showError();
         }
     }
 
@@ -73,20 +80,20 @@ class RoundSetup extends Component {
             return (
                 <Fragment>
                     <div className="container col-sm-offset-1 col-sm-10">
-                    <br/>
-                    <h3>Please select round</h3>
-                    <hr/>
-                    <div className="col-sm-2 row">
-                    <select className="form-control" onChange={this.handleDropDownChange}>
-                        {
-                            this.getRoundsArray().map(i => (
-                                <option key={i} value={i}>Round {i}</option>
-                            ))
-                        }
-                    </select>
+                        <br />
+                        <h3>Please select round</h3>
+                        <hr />
+                        <div className="col-sm-2 row">
+                            <select className="form-control" onChange={this.handleDropDownChange}>
+                                {
+                                    this.getRoundsArray().map(i => (
+                                        <option key={i} value={i}>Round {i}</option>
+                                    ))
+                                }
+                            </select>
+                        </div>
                     </div>
-                    </div>
-                    
+
                 </Fragment>
             )
         }

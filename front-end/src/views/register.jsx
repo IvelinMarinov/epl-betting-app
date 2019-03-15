@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router'
+import { Redirect } from 'react-router';
+import { toast } from 'react-toastify';
 import AuthService from '../services/auth-service';
 import { UserConsumer } from '../components/contexts/user-context.js';
+
+const SuccessMsg = 'Thank you for registerring';
 
 class Register extends Component {
     static authService = new AuthService();
@@ -19,6 +22,17 @@ class Register extends Component {
         }
     }
 
+    showError = () => {
+        const {error} = this.state;        
+        if(error) {
+            toast.error(error);            
+        }
+    }
+
+    showSuccess = (message) => {
+        toast.success(message);
+    }
+
     handleChange = ({ target }) => {
         this.setState({
             [target.name]: target.value
@@ -33,16 +47,28 @@ class Register extends Component {
 
         try {
             let response = await Register.authService.register(body);
+            console.log(response)
             if (!response.success) {
-                //const errors = Object.values(result.errors).join(' ')
-                throw new Error(response.message);
+                if(response.errors) {
+                    let errorsStr = Object.values(response.errors).join('\n')
+                    throw new Error(errorsStr);
+                } else {
+                    throw new Error(response.message);                    
+                }
             }
 
             this.setState({
                 hasRegisterred: true
-            })
+            });
+
+            this.showSuccess(SuccessMsg);
+
         } catch (err) {
 
+            this.setState({
+                error: err.message
+            });
+            this.showError();
         }
 
     }

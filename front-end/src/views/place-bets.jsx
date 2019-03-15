@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { toast } from 'react-toastify';
 import BetsService from '../services/bets-service';
 import PlaceBetsForm from '../components/PlaceBets/place-bets-form';
 import Loading from '../components/common/loading';
@@ -17,8 +18,16 @@ class PlaceBets extends Component {
         this.state = {
             fixture: null,
             isDataFetched: false,
+            shouldRenderError: false,
             hasError: false,
             error: ''
+        }
+    }
+
+    showError = () => {
+        const {error} = this.state;        
+        if(error) {
+            toast.error(error);            
         }
     }
 
@@ -30,9 +39,11 @@ class PlaceBets extends Component {
             if (ErrorMessagesToRender.includes(response.message)) {
                 this.setState({
                     hasError: true,
+                    shouldRenderError: true,
                     error: response.message,
                     isDataFetched: true
                 })
+                return;
             }
 
             if (!response.success) {
@@ -48,13 +59,12 @@ class PlaceBets extends Component {
             }, 700);            
             
         } catch (err) {
-            //console.log(err)
             this.setState({
                 hasError: true,
+                shouldRenderError: false,
                 error: err.message
-            })
-
-            console.log(this.state.error)
+            });
+            this.showError();
         }
     }
 
@@ -69,7 +79,12 @@ class PlaceBets extends Component {
 
         if (hasError) {
             return (
-                <h3>{error}</h3>
+                <div className="container">
+                    <div className="col-sm-offset-1 col-sm-10">
+                        <br/>
+                        <h3>{error}</h3>
+                    </div>
+                </div>
             );
         }
 

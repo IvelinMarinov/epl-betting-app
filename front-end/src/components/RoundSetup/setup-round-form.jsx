@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
+import { toast } from 'react-toastify';
 import AdminService from '../../services/admin-service';
-import TeamsDropDown from './teams-dropdown';
 import DropDownPair from './dropdown-pair';
 
 class SetupRoundForm extends Component {
@@ -23,6 +23,14 @@ class SetupRoundForm extends Component {
         }
     }
 
+    showError = (error) => {
+        toast.error(error);
+    }
+
+    showSuccess = (message) => {
+        toast.success(message);
+    }
+
     handleChange = (event) => {
         this.setState({
             [event.target.id]: event.target.value
@@ -34,18 +42,38 @@ class SetupRoundForm extends Component {
     handleSubmit = async (event) => {
         event.preventDefault();
 
-        // const values = Object.values(this.state);
-        // if(values.filter(v => v === '').length) {
-        //     console.log('All fields are required');
-        //     return;
-        // }
+        const values = Object.values(this.state);
+        if(values.filter(v => v === '').length) {
+            this.showError('All fields are required');
+            return;
+        }
 
-        // const uniqueValues = [...new Set(values)]
-        // if(uniqueValues.length !== values.length) {
-        //     console.log('The same team cannot be selected for more than one game');
-        //     return; 
-        // }
+        const uniqueValues = [...new Set(values)]
+        if(uniqueValues.length !== values.length) {
+            this.showError('The same team cannot be selected for more than one game');
+            return; 
+        }
 
+        const reqBody = {
+            round: this.props.selectedRound,
+            games: this.transformStateToReqBody()
+        }
+
+        try {
+            let response = await SetupRoundForm.AdminService.saveRoundData(reqBody);
+            console.log(response)
+
+            if (!response.success) {
+                throw new Error(response.message);
+            }
+
+            this.showSuccess(response.message);
+        } catch (err) {
+            this.showError(err.message)
+        }
+    }
+
+    transformStateToReqBody() {
         let reqBody = {}
         for (let [key, value] of Object.entries(this.state)) {
             const [homeOrAway, gameNum] = key.split('_');
@@ -65,27 +93,7 @@ class SetupRoundForm extends Component {
             }
         }
 
-        reqBody = {
-            round: this.props.selectedRound,
-            games: reqBody
-        }
-
-        console.log(reqBody)
-
-        try {
-            let response = await SetupRoundForm.AdminService.saveRoundData(reqBody);
-            console.log(response)
-
-            if (!response.success) {
-                throw new Error(response.message);
-            }
-
-            //TODO
-            //Show success message
-
-        } catch (err) {
-            console.log(err)
-        }
+        return reqBody;
     }
 
     getGameNumbersArray() {

@@ -1,6 +1,9 @@
 import React, { Component, Fragment } from 'react';
+import { Redirect } from 'react-router';
+import { toast } from 'react-toastify';
 import AdminService from '../services/admin-service';
 import CompleteRoundForm from '../components/CompleteRound/complete-round-form';
+import Loading from '../components/common/loading';
 
 const ErrorMessagesToRender = [
     'There are no active rounds, please set up a new round!',
@@ -16,8 +19,16 @@ class CompleteRound extends Component {
         this.state = {
             fixture: null,
             isDataFetched: false,
+            renderError: false,
             hasError: false,
             error: ''
+        }
+    }
+
+    showError = () => {
+        const { error } = this.state;
+        if (error) {
+            toast.error(error);
         }
     }
 
@@ -25,52 +36,55 @@ class CompleteRound extends Component {
         try {
             let response = await CompleteRound.AdminService.getActiveRound();
 
-            if(ErrorMessagesToRender.includes(response.message)) {
+            if (ErrorMessagesToRender.includes(response.message)) {
                 this.setState({
                     hasError: true,
+                    renderError: true,
                     error: response.message,
                     isDataFetched: true
-                })
+                });
+                return;
             }
 
             if (!response.success) {
                 throw new Error(response.message);
             }
 
-            console.log(response.data)
-
             this.setState({
                 fixture: response.data,
                 isDataFetched: true
             })
         } catch (err) {
-            console.log(err)
             this.setState({
                 hasError: true,
                 error: err.message
-            })
+            });
+            this.showError();
         }
     }
 
     render() {
-        const { isDataFetched, fixture, hasError, error } = this.state
+        const { isDataFetched, fixture, renderError, error } = this.state
 
-        if(!isDataFetched) {
-            return (
-                <span>Loading...</span>
-            );
+        if (!isDataFetched) {
+            return <Loading />;
         }
 
-        if(hasError) {
+        if (renderError) {
             return (
-                <h3>{error}</h3>
+                <div className="container">
+                    <div className="col-sm-offset-1 col-sm-10">
+                        <br/>
+                        <h3>{error}</h3>
+                    </div>
+                </div>
             );
         }
 
         return (
-                <CompleteRoundForm
-                    fixture={fixture}
-                />
+            <CompleteRoundForm
+                fixture={fixture}
+            />
         )
     }
 }
