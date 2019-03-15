@@ -108,7 +108,6 @@ class CompleteRoundForm extends Component {
             games: games
         }
 
-        console.log(reqBody)
         return reqBody;
     }
 

@@ -47,7 +47,7 @@ class Register extends Component {
 
         try {
             let response = await Register.authService.register(body);
-            console.log(response)
+            
             if (!response.success) {
                 if(response.errors) {
                     let errorsStr = Object.values(response.errors).join('\n')

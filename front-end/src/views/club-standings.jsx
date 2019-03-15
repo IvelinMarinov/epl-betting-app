@@ -46,7 +46,6 @@ class ClubStandings extends Component {
 
     processResponse(response) {
         let sortedStats = [];
-        console.log(response.data)
 
         for (let teamStat of response.data) {
             sortedStats.push({

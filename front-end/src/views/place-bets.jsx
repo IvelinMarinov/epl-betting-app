@@ -6,7 +6,8 @@ import Loading from '../components/common/loading';
 
 
 const ErrorMessagesToRender = [
-    'There is no active round currently, please come back again later!'
+    'There is no active round currently, please come back again later!',
+    'Sorry, we are no longer accepting bets for this round!'
 ]
 
 class PlaceBets extends Component {

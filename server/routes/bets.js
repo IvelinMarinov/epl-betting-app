@@ -22,9 +22,17 @@ router.get('/get-active-round', async (req, res) => {
             message: 'There is no active round currently, please come back again later!',
             data: {}
         });
-    }
+    }    
 
     let activeFixture = activeFixtures[0];
+
+    if(activeFixture.betsAcceptedBy < Date.now()) {
+        return res.status(200).json({
+            success: false,
+            message: 'Sorry, we are no longer accepting bets for this round',
+            data: {}
+        });
+    }
 
     //Check if user already bet for this round
     const userId = req.user._id;

@@ -46,7 +46,7 @@ router.post('/save-round', async (req, res) => {
     })
   }
 
-  let { round, games } = req.body;
+  let { round, betsAcceptedBy, games } = req.body;
 
   try {
     let fixture = await Fixture.findOne({ round: round });
@@ -73,6 +73,7 @@ router.post('/save-round', async (req, res) => {
     await Fixture
       .findByIdAndUpdate(fixture._id, {
         $set: {
+          betsAcceptedBy: betsAcceptedBy,
           gameStats: gameIds,
           isActive: true
         }
@@ -218,7 +219,11 @@ router.post('/complete-round', async (req, res) => {
       }
 
       await User.findByIdAndUpdate(userId, {
-        $inc: { points: pointsEarned }
+        $inc: { 
+          points: pointsEarned,
+          guessedSigns: pointsEarned >= 1 ? 1 : 0,
+          guessedScores: pointsEarned == 3 ? 1 : 0
+        }
       })
     }
   }

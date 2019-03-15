@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { toast } from 'react-toastify';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import AdminService from '../../services/admin-service';
 import DropDownPair from './dropdown-pair';
 
@@ -10,6 +12,7 @@ class SetupRoundForm extends Component {
         super(props);
 
         this.state = {
+            betsAcceptedBy: '',
             home_1: '', away_1: '',
             home_2: '', away_2: '',
             home_3: '', away_3: '',
@@ -35,8 +38,6 @@ class SetupRoundForm extends Component {
         this.setState({
             [event.target.id]: event.target.value
         })
-
-        console.log(this.state)
     }
 
     handleSubmit = async (event) => {
@@ -54,15 +55,17 @@ class SetupRoundForm extends Component {
         //     return; 
         // }
 
+        const { betsAcceptedBy, ...rest } = this.state;
+
         const reqBody = {
+            betsAcceptedBy: this.state.betsAcceptedBy,
             round: this.props.selectedRound,
-            games: this.transformStateToReqBody()
+            games: this.transformStateToReqBody(rest)
         }
 
         try {
             let response = await SetupRoundForm.AdminService.saveRoundData(reqBody);
-            console.log(response)
-
+        
             if (!response.success) {
                 throw new Error(response.message);
             }
@@ -73,9 +76,9 @@ class SetupRoundForm extends Component {
         }
     }
 
-    transformStateToReqBody() {
+    transformStateToReqBody(state) {
         let reqBody = {}
-        for (let [key, value] of Object.entries(this.state)) {
+        for (let [key, value] of Object.entries(state)) {
             const [homeOrAway, gameNum] = key.split('_');
 
             let gameNumAdded = Object.keys(reqBody).filter(k => k === gameNum);
@@ -112,8 +115,8 @@ class SetupRoundForm extends Component {
         return (
             <Fragment>
                 <form onSubmit={this.handleSubmit}>
-                <div className="container col-sm-offset-1 col-sm-10">
-                    <br/>
+                    <div className="container col-sm-offset-1 col-sm-10">
+                        <br />
                         <h3>Setup Games for Round {selectedRound}</h3>
                         <hr />
 
@@ -126,12 +129,27 @@ class SetupRoundForm extends Component {
                                     handleChange={this.handleChange}
                                 />
                             )
-                        }                        
+                        }
 
+                        <div className="row">
+                            <div className="col-sm-2">
+                                <label className="control-label">Bets Accepted By</label>
+                            </div>
+                            <div className="col-sm-3">
+                            <input
+                                required
+                                className="form-control"
+                                id="betsAcceptedBy"
+                                type="date"
+                                onChange={this.handleChange}
+                            />
+                            </div>                            
+                        </div>
+                        <br/>
                         <button className="btn btn-outline-success" type="submit">Submit</button>
-
                     </div>
                 </form>
+                <br />
             </Fragment>
         );
     }

@@ -42,8 +42,6 @@ class RoundSetup extends Component {
                 throw new Error(response.message);
             }
 
-            console.log(response)
-
             const teamsData = response.data
                 .sort(function (a, b) {
                     return a.name.localeCompare(b.name)
