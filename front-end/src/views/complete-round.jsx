@@ -1,10 +1,8 @@
-import React, { Component, Fragment } from 'react';
-import { Redirect } from 'react-router';
+import React, { Component } from 'react';
 import { toast } from 'react-toastify';
 import AdminService from '../services/admin-service';
 import CompleteRoundForm from '../components/CompleteRound/complete-round-form';
 import Loading from '../components/common/loading';
-import { UserConsumer } from '../components/contexts/user-context';
 
 const ErrorMessagesToRender = [
     'There are no active rounds, please set up a new round!',

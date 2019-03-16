@@ -11,17 +11,19 @@ class PlaceBetsForm extends Component {
     constructor(props) {
         super(props)
 
+        const gameStats = this.props.fixture.gameStats;
+
         this.state = {
-            home_1: '', away_1: '', id_1: '',
-            home_2: '', away_2: '', id_2: '',
-            home_3: '', away_3: '', id_3: '',
-            home_4: '', away_4: '', id_4: '',
-            home_5: '', away_5: '', id_5: '',
-            home_6: '', away_6: '', id_6: '',
-            home_7: '', away_7: '', id_7: '',
-            home_8: '', away_8: '', id_8: '',
-            home_9: '', away_9: '', id_9: '',
-            home_10: '', away_10: '', id_10: '',
+            home_1: gameStats[0].homeTeamGoals || '', away_1: gameStats[0].awayTeamGoals || '', id_1: gameStats[0]._id,
+            home_2: gameStats[1].homeTeamGoals || '', away_2: gameStats[1].awayTeamGoals || '', id_2: gameStats[1]._id,
+            home_3: gameStats[2].homeTeamGoals || '', away_3: gameStats[2].awayTeamGoals || '', id_3: gameStats[2]._id,
+            home_4: gameStats[3].homeTeamGoals || '', away_4: gameStats[3].awayTeamGoals || '', id_4: gameStats[3]._id,
+            home_5: gameStats[4].homeTeamGoals || '', away_5: gameStats[4].awayTeamGoals || '', id_5: gameStats[4]._id,
+            home_6: gameStats[5].homeTeamGoals || '', away_6: gameStats[5].awayTeamGoals || '', id_6: gameStats[5]._id,
+            home_7: gameStats[6].homeTeamGoals || '', away_7: gameStats[6].awayTeamGoals || '', id_7: gameStats[6]._id,
+            home_8: gameStats[7].homeTeamGoals || '', away_8: gameStats[7].awayTeamGoals || '', id_8: gameStats[7]._id,
+            home_9: gameStats[8].homeTeamGoals || '', away_9: gameStats[8].awayTeamGoals || '', id_9: gameStats[8]._id,
+            home_10: gameStats[9].homeTeamGoals || '', away_10: gameStats[9].awayTeamGoals || '', id_10: gameStats[9]._id,
         }
     }
 
@@ -45,7 +47,7 @@ class PlaceBetsForm extends Component {
     handleSubmit = async (event) => {
         event.preventDefault();
 
-         const values = Object.values(this.state);
+        const values = Object.values(this.state);
         if (values.filter(v => v === '').length) {
             this.showError('All scores are required');
             return;

@@ -1,4 +1,4 @@
-import { get, post } from '../data/crud';
+import { post } from '../data/crud';
  
 class AuthService {
     constructor() {

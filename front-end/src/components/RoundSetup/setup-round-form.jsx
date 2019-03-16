@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import { toast } from 'react-toastify';
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import AdminService from '../../services/admin-service';
 import DropDownPair from './dropdown-pair';
@@ -133,7 +132,7 @@ class SetupRoundForm extends Component {
 
                         <div className="row">
                             <div className="col-sm-2">
-                                <label className="control-label">Bets Accepted By</label>
+                                <h6 className="control-label">Bets Accepted By</h6>
                             </div>
                             <div className="col-sm-3">
                             <input

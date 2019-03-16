@@ -54,7 +54,7 @@ class GamePair extends Component {
                     <div className="container-fluid">
                         <div className="row">
                             {/* HOME TEAM SECTION */}
-                            <div className="row col-sm-4">
+                            <div className="row col-sm-5">
                                 <img src={this.getTeamLogoUrl(homeTeam.shortName)} alt="" />
                                 &nbsp;&nbsp;
                                 <h5>{homeTeam.name}</h5>
@@ -77,7 +77,7 @@ class GamePair extends Component {
                                 </div>
                             </div>
 
-                            {/* VS SECTION         */}
+                            {/* VS SECTION */}
                             <div className="col-sm-1 text-center">
                                 {/* &nbsp;&nbsp;&nbsp; */}
                                 <h4 className="text-center">VS</h4>
@@ -85,7 +85,7 @@ class GamePair extends Component {
                             </div>
 
                             {/* AWAY TEAM SECTION */}
-                            <div className="row col-sm-4">
+                            <div className="row col-sm-5">
                                 <div className="mr-auto">
                                     <input
                                         className="form-control"

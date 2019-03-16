@@ -11,7 +11,7 @@ class DropDownPair extends Component {
                 <div className="row">
 
                     <div className="col-sm-1">
-                        <span>Game {gameNum} </span>
+                        <h6>Game {gameNum} </h6>
                     </div>
 
                     <div className="col-sm-3">

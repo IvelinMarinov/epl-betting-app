@@ -1,8 +1,7 @@
-import React, { Component, Fragment, Redirect } from 'react';
+import React, { Component, Fragment } from 'react';
 import { toast } from 'react-toastify';
 import AdminService from '../services/admin-service';
 import SetupRoundForm from '../components/RoundSetup/setup-round-form';
-import { UserConsumer } from '../components/contexts/user-context';
 
 class RoundSetup extends Component {
     static AdminService = new AdminService();
